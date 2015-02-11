@@ -12,7 +12,6 @@ public class Menu extends Activity implements OnClickListener{
 	Button fb_login;
 	Button sign_up;
 	Button view_profile;
-    Button test;
 	
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +51,7 @@ public class Menu extends Activity implements OnClickListener{
                 startActivity(intent);
             }
         });
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Intent intent = new Intent("android.intent.action.MYVEHICLES");
-                //  intent.addCategory(Intent.CATEGORY_HOME);
-                startActivity(intent);
-            }
-        });
+        
 		
 	}
 
