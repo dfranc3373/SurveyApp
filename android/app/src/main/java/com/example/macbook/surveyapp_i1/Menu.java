@@ -33,7 +33,7 @@ public class Menu extends Activity implements OnClickListener{
 			    startActivity(intent);
 			}
 		});
-
+	//On click listener for sign up.
         sign_up.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
