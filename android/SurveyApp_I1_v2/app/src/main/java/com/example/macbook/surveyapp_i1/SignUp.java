@@ -21,7 +21,7 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
    // String getAge;
 
     private String[] ageGroup = { "Below 14", "15-21", "22-30", "31-39","40-50","50+"};
-   public String getAge = "Error Encountered!!!";
+    public String getAge = "Error Encountered!!!";
 
     
 	@Override
