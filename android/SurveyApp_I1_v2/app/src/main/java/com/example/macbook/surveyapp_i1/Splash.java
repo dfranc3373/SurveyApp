@@ -16,7 +16,6 @@ public class Splash extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-
         new Handler().postDelayed(new Runnable() {
         	 
             /*
@@ -29,8 +28,6 @@ public class Splash extends Activity {
                 // This method will be executed once the timer is over
                 // Start your app main activity
 
-
-
                 try {
                     Intent i = new Intent(Splash.this, ViewProfile.class);
                     startActivity(i);
@@ -38,13 +35,14 @@ public class Splash extends Activity {
                     Intent i = new Intent(Splash.this, Menu.class);
                     startActivity(i);
                 }
-
                        // Intent i = new Intent(Splash.this, Menu.class);
                        // startActivity(i);
                 finish();
             }
         }, SPLASH_TIME_OUT);
     }
+
+
     protected void onPause(){
     	super.onPause();
     	finish();

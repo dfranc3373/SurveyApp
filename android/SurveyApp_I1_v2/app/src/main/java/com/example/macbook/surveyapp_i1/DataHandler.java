@@ -11,7 +11,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class DataHandler {
-	public static final String KEY_ROWID = "rowid";
+
+    public static final String KEY_ROWID = "rowid";
 	public static final String KEY_NAME = "Name";
     public static final String KEY_LAST = "Last";
     public static final String KEY_AGE = "Age";
@@ -51,13 +52,12 @@ public class DataHandler {
 			+ KEY_PHONE + " integer not null);");
 		}
 
+
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 			db.execSQL("DROP TABLE IF EXISTS myTable");
 			onCreate(db);
-
 		}
-
 	}
 
 	public DataHandler open() {
@@ -83,16 +83,19 @@ public class DataHandler {
         String where = KEY_ROWID + "=" + rowId;
         String[] columns = new String[] {KEY_ROWID,KEY_NAME, KEY_LAST, KEY_AGE, KEY_PHONE};
         Cursor c= db.query(TABLE_NAME, columns, where, null, null, null, null, null);
+
         if (c != null) {
             c.moveToFirst();
         }
         return c;
     }
+
 
     public Cursor getAllRows() {
         String where = null;
         String[] columns = new String[] {KEY_ROWID,KEY_NAME, KEY_LAST, KEY_AGE, KEY_PHONE};
         Cursor c= db.query(TABLE_NAME, columns, where, null, null, null, null, null);
+
         if (c != null) {
             c.moveToFirst();
         }
@@ -100,23 +103,24 @@ public class DataHandler {
     }
 
 
-
-
-
 	public String getData() {
 		// TODO Auto-generated method stub
-		String[] columns = new String[] { KEY_ROWID, KEY_NAME,
+
+        String[] columns = new String[] { KEY_ROWID, KEY_NAME,
 				KEY_LAST, KEY_AGE,KEY_PHONE };
+
 		Cursor c = db.query(TABLE_NAME, columns, null, null, null, null, null);
 		// Cursor c= db.query(TABLE_NAME, columns, null, null, null, null, null,
 		// null);
+
 		String result = "";
 		//int iRow = c.getColumnIndex(KEY_ROWID);
 		int iName = c.getColumnIndex(KEY_NAME);
         int iLast = c.getColumnIndex(KEY_LAST);
         int iAge = c.getColumnIndex(KEY_AGE);
         int iPhone = c.getColumnIndex(KEY_PHONE);
-		for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+
+        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
 			result = result 
 					//+ c.getString(iRow)
 					+ " " + c.getString(iName)
@@ -127,13 +131,16 @@ public class DataHandler {
 		return result;
 	}
 
+
     public String getFirstLast() {
         // TODO Auto-generated method stub
+
         String[] columns = new String[] {KEY_NAME, KEY_LAST};
         Cursor c = db.query(TABLE_NAME, columns, null, null, null, null, null);
         String result = "";
         int iName = c.getColumnIndex(KEY_NAME);
         int iLast = c.getColumnIndex(KEY_LAST);
+
         //for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
         c.moveToFirst();
             result = result
@@ -142,6 +149,7 @@ public class DataHandler {
        // }
         return result;
     }
+
 
     public String getName() {
         // TODO Auto-generated method stub
@@ -156,6 +164,8 @@ public class DataHandler {
             //  }
         return result;
     }
+
+
     public String getLast() {
         // TODO Auto-generated method stub
         String[] columns = new String[] {KEY_LAST};
@@ -169,6 +179,8 @@ public class DataHandler {
       //  }
         return result;
     }
+
+
     public String getAge() {
         // TODO Auto-generated method stub
         String[] columns = new String[] {KEY_AGE};
@@ -182,6 +194,8 @@ public class DataHandler {
       //  }
         return result;
     }
+
+
     public String getPhone() {
         // TODO Auto-generated method stub
         String[] columns = new String[] {KEY_PHONE};
@@ -195,6 +209,7 @@ public class DataHandler {
      //   }
         return result;
     }
+
 
     public String getId() {
         // TODO Auto-generated method stub

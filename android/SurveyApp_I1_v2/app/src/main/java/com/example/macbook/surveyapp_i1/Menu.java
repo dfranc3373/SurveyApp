@@ -2,6 +2,7 @@ package com.example.macbook.surveyapp_i1;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,19 +21,19 @@ import com.facebook.widget.LoginButton;
 import java.util.Arrays;
 
 public class Menu extends Activity implements OnClickListener{
-	//Button fb_login;
 
-    static final String FB_TOKEN = "fbToken";
+    SharedPreferences sPref;
 
 	Button sign_up;
 	Button view_profile;
     private String TAG = "LoginWithFB";
-    String get_age, get_name, get_gender, get_email;
+    String get_age, get_name, get_gender, get_email, get_id;
 	
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(final Bundle savedInstanceState) {
 		// TODO Auto-generated method stub	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
+
         sign_up = (Button) findViewById(R.id.btn_sign_up);
         view_profile = (Button) findViewById(R.id.btn_view_profile);
         LoginButton authButton = (LoginButton) findViewById(R.id.authButton);
@@ -44,7 +45,6 @@ public class Menu extends Activity implements OnClickListener{
                 Log.i(TAG, "Error " + error.getMessage());
             }
         });
-
 
         // set permission list, Don't forget to add email
         authButton.setReadPermissions(Arrays.asList("basic_info", "email"));
@@ -58,11 +58,7 @@ public class Menu extends Activity implements OnClickListener{
                     Log.i(TAG,"Access Token"+ session.getAccessToken());
 
                     String fbToken = session.getAccessToken();
-
-                    //Art: save fb token for possible future use
-
-                    saveSharedPreferences(FB_TOKEN, fbToken);
-
+                    saveSharedPreferences(Constants.FB_TOKEN, fbToken);
 
                     Request.executeMeRequestAsync(session,
                             new Request.GraphUserCallback() {
@@ -72,27 +68,27 @@ public class Menu extends Activity implements OnClickListener{
                                         Log.i(TAG, "User ID " + user.getId());
                                         Log.i(TAG, "Email " + user.asMap().get("email"));
 
+                                        get_id = (String) user.getId();
                                         get_gender = (String) user.getProperty("gender");
                                         //get_age = (String) user.getProperty("birthday");
                                         get_email = (String) user.getProperty("email");
                                         get_name = user.getName();
 
+                                        //Save to db
                                         DataHandler entry = new DataHandler(Menu.this);
                                         entry.open();
                                         entry.createEntry(get_name, get_email, get_name, get_gender);
                                         entry.close();
 
-                                        //Art: create shared preferences to store user basic info
-
-
-
+                                        //Save to sharedPreferences
+                                        saveSharedPreferences(Constants.FB_USER_ID, get_id);
+                                        saveSharedPreferences(Constants.FB_USER_NAME, get_name);
+                                        saveSharedPreferences(Constants.FB_USER_EMAIL, get_email);
+                                        saveSharedPreferences(Constants.FB_USER_GENDER, get_gender);
 
                                         Intent intent = new Intent(
                                                 "android.intent.action.REGISTERING");
                                         startActivity(intent);
-
-
-
 
                                     } else {
                                     }
@@ -127,7 +123,10 @@ public class Menu extends Activity implements OnClickListener{
 
     private void saveSharedPreferences(String fieldName, String fieldContent){
 
-        //Art: handle storing sp here
+        sPref = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor ed = sPref.edit();
+        ed.putString(fieldName, fieldContent);
+        ed.apply();
     }
 
 
@@ -138,19 +137,14 @@ public class Menu extends Activity implements OnClickListener{
 	}
 
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
 
-
-
-
-
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
     }
+
 
     @Override
     protected void onPause() {
