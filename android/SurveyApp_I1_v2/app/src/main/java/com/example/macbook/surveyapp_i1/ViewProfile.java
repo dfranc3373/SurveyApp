@@ -1,15 +1,9 @@
 package com.example.macbook.surveyapp_i1;
 
 import android.app.Activity;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class ViewProfile extends Activity implements View.OnClickListener {
 
@@ -21,20 +15,15 @@ public class ViewProfile extends Activity implements View.OnClickListener {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
+
         TextView tv_name = (TextView) findViewById(R.id.dbview_name);
         TextView tv_phone = (TextView) findViewById(R.id.dbview_phone);
-
-
-
 
         //Open database
         info.open();
 
-
-
         String name = info.getFirstLast();
         tv_name.setText(name);
-
 
         String phone = info.getPhone();
         tv_phone.setText(phone);

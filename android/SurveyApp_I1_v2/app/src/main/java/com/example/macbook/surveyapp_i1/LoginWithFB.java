@@ -2,13 +2,10 @@ package com.example.macbook.surveyapp_i1;
 
 
 
-import java.util.Arrays;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.FacebookException;
@@ -20,14 +17,20 @@ import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 import com.facebook.widget.LoginButton.OnErrorListener;
 
+import java.util.Arrays;
+
 public class LoginWithFB extends Activity {
 
     private String TAG = "MainActivity";
+
+
     private TextView lblEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginwithfb);
+
         lblEmail = (TextView) findViewById(R.id.lblEmail);
 
         LoginButton authButton = (LoginButton) findViewById(R.id.authButton);
@@ -38,8 +41,10 @@ public class LoginWithFB extends Activity {
                 Log.i(TAG, "Error " + error.getMessage());
             }
         });
-        // set permission list, Don't foeget to add email
+
+        // set permission list, Don't forget to add email
         authButton.setReadPermissions(Arrays.asList("basic_info","email"));
+
         // session state call back event
         authButton.setSessionStatusCallback(new Session.StatusCallback() {
 
@@ -48,19 +53,27 @@ public class LoginWithFB extends Activity {
 
                 if (session.isOpened()) {
                     Log.i(TAG,"Access Token"+ session.getAccessToken());
+
+                    //Art: save token for possible future use
+
                     Request.executeMeRequestAsync(session,
+
                             new Request.GraphUserCallback() {
+
                                 @Override
                                 public void onCompleted(GraphUser user,Response response) {
+
                                     if (user != null) {
                                         Log.i(TAG,"User ID "+ user.getId());
                                         Log.i(TAG,"Email "+ user.asMap().get("email"));
+
                                         lblEmail.setText(user.asMap().get("email").toString());
+
+                                        //Art: fill sharedPref and show ViewProfile
                                     }
                                 }
                             });
                 }
-
             }
         });
     }

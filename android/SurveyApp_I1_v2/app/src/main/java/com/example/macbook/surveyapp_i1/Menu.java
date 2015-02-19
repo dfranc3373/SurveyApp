@@ -9,16 +9,17 @@ import android.widget.Button;
 
 
 public class Menu extends Activity implements OnClickListener{
-	Button fb_login;
+
+    Button fb_login;
 	Button sign_up;
 	Button view_profile;
     Button test;
-	
-	
+
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
+
 		fb_login = (Button) findViewById(R.id.btn_fb_login);
         sign_up = (Button) findViewById(R.id.btn_sign_up);
         view_profile = (Button) findViewById(R.id.btn_view_profile);
@@ -43,6 +44,7 @@ public class Menu extends Activity implements OnClickListener{
 				    startActivity(intent);
 				}
 			});
+
         view_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +54,7 @@ public class Menu extends Activity implements OnClickListener{
                 startActivity(intent);
             }
         });
+
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +66,6 @@ public class Menu extends Activity implements OnClickListener{
         });
 		
 	}
-
 
 
 	@Override
