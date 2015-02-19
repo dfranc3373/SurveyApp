@@ -51,10 +51,12 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
                 String getLastName = LastName.getText().toString();
                // String getAge = Age.getText().toString();
                 String getPhone = Phone.getText().toString();
+
                 DataHandler entry = new DataHandler(SignUp.this);
                 entry.open();
                 entry.createEntry(getFirstName, getLastName, getAge, getPhone);
                 entry.close();
+
                 Intent intent = new Intent(
                         "android.intent.action.REGISTERING");
                 startActivity(intent);

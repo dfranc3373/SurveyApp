@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import java.util.Arrays;
+
 import com.facebook.AppEventsLogger;
 import com.facebook.FacebookException;
 import com.facebook.Request;
@@ -17,8 +17,12 @@ import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
 
+import java.util.Arrays;
+
 public class Menu extends Activity implements OnClickListener{
 	//Button fb_login;
+
+    static final String FB_TOKEN = "fbToken";
 
 	Button sign_up;
 	Button view_profile;
@@ -52,6 +56,14 @@ public class Menu extends Activity implements OnClickListener{
 
                 if (session.isOpened()) {
                     Log.i(TAG,"Access Token"+ session.getAccessToken());
+
+                    String fbToken = session.getAccessToken();
+
+                    //Art: save fb token for possible future use
+
+                    saveSharedPreferences(FB_TOKEN, fbToken);
+
+
                     Request.executeMeRequestAsync(session,
                             new Request.GraphUserCallback() {
                                 @Override
@@ -59,17 +71,27 @@ public class Menu extends Activity implements OnClickListener{
                                     if (user != null) {
                                         Log.i(TAG, "User ID " + user.getId());
                                         Log.i(TAG, "Email " + user.asMap().get("email"));
+
                                         get_gender = (String) user.getProperty("gender");
                                         //get_age = (String) user.getProperty("birthday");
                                         get_email = (String) user.getProperty("email");
                                         get_name = user.getName();
+
                                         DataHandler entry = new DataHandler(Menu.this);
                                         entry.open();
                                         entry.createEntry(get_name, get_email, get_name, get_gender);
                                         entry.close();
+
+                                        //Art: create shared preferences to store user basic info
+
+
+
+
                                         Intent intent = new Intent(
                                                 "android.intent.action.REGISTERING");
                                         startActivity(intent);
+
+
 
 
                                     } else {
@@ -90,6 +112,8 @@ public class Menu extends Activity implements OnClickListener{
 				    startActivity(intent);
 				}
 			});
+
+        //Art: need for testing purposes
         view_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,10 +123,12 @@ public class Menu extends Activity implements OnClickListener{
                 startActivity(intent);
             }
         });
-
-		
 	}
 
+    private void saveSharedPreferences(String fieldName, String fieldContent){
+
+        //Art: handle storing sp here
+    }
 
 
 	@Override
