@@ -21,7 +21,7 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
    // String getAge;
 
     private String[] ageGroup = { "Below 14", "15-21", "22-30", "31-39","40-50","50+"};
-    public String getAge = "Error Encountered!!!";
+   public String getAge = "Error Encountered!!!";
 
     
 	@Override
@@ -29,7 +29,6 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.signup);
-
 		Register =(Button)findViewById(R.id.btn_register);
         FirstName =(EditText)findViewById(R.id.first_name);
         LastName =(EditText)findViewById(R.id.last_name);
@@ -38,8 +37,8 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
 
 // Adapter for String[] makeName i.e. a Spinner(drop down box)
         ArrayAdapter<String> adapterAge = new ArrayAdapter<String>(
-                SignUp.this, android.R.layout.simple_spinner_dropdown_item, ageGroup);
-
+                SignUp.this,
+                android.R.layout.simple_spinner_dropdown_item, ageGroup);
         selectAge = (Spinner) findViewById(R.id.spinner_age);
         selectAge.setAdapter(adapterAge);
         selectAge.setOnItemSelectedListener(this);
@@ -48,24 +47,21 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-
                 String getFirstName = FirstName.getText().toString();
                 String getLastName = LastName.getText().toString();
                // String getAge = Age.getText().toString();
                 String getPhone = Phone.getText().toString();
-
                 DataHandler entry = new DataHandler(SignUp.this);
                 entry.open();
                 entry.createEntry(getFirstName, getLastName, getAge, getPhone);
                 entry.close();
-
                 Intent intent = new Intent(
                         "android.intent.action.REGISTERING");
                 startActivity(intent);
+
             }
         });
 	}
-
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -73,7 +69,6 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
         getAge = ageGroup[posMake];
        // getAge = (String) selectAge.getSelectedItem();
     }
-
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

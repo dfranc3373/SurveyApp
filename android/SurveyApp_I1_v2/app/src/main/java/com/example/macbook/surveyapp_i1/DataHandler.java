@@ -53,6 +53,7 @@ public class DataHandler {
 			onCreate(db);
 
 		}
+
 	}
 
 	public DataHandler open() {
@@ -60,11 +61,9 @@ public class DataHandler {
 		return this;
 	}
 
-
 	public void close() {
 		dbhelper.close();
 	}
-
 
 	public long createEntry(String Name, String Last, String Age, String Phone) {
 		ContentValues content = new ContentValues();
@@ -86,7 +85,6 @@ public class DataHandler {
         return c;
     }
 
-
     public Cursor getAllRows() {
         String where = null;
         String[] columns = new String[] {KEY_ROWID,KEY_NAME, KEY_LAST, KEY_AGE, KEY_PHONE};
@@ -98,25 +96,23 @@ public class DataHandler {
     }
 
 
+
+
+
 	public String getData() {
 		// TODO Auto-generated method stub
-
-        String[] columns = new String[] { KEY_ROWID, KEY_NAME,
+		String[] columns = new String[] { KEY_ROWID, KEY_NAME,
 				KEY_LAST, KEY_AGE,KEY_PHONE };
-
 		Cursor c = db.query(TABLE_NAME, columns, null, null, null, null, null);
 		// Cursor c= db.query(TABLE_NAME, columns, null, null, null, null, null,
 		// null);
-
-        String result = "";
-
+		String result = "";
 		//int iRow = c.getColumnIndex(KEY_ROWID);
 		int iName = c.getColumnIndex(KEY_NAME);
         int iLast = c.getColumnIndex(KEY_LAST);
         int iAge = c.getColumnIndex(KEY_AGE);
         int iPhone = c.getColumnIndex(KEY_PHONE);
-
-        for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+		for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
 			result = result 
 					//+ c.getString(iRow)
 					+ " " + c.getString(iName)
@@ -134,15 +130,14 @@ public class DataHandler {
         String result = "";
         int iName = c.getColumnIndex(KEY_NAME);
         int iLast = c.getColumnIndex(KEY_LAST);
-       // for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+        //for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
         c.moveToFirst();
             result = result
                      + c.getString(iName)
                      + " " + c.getString(iLast);
-      //  }
+       // }
         return result;
     }
-
 
     public String getName() {
         // TODO Auto-generated method stub
@@ -153,12 +148,10 @@ public class DataHandler {
       //  for (c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
         c.moveToFirst();
             result = result
-                    + "  " + c.getString(iName);
-      //  }
+                    + " " + c.getString(iName);
+            //  }
         return result;
     }
-
-
     public String getLast() {
         // TODO Auto-generated method stub
         String[] columns = new String[] {KEY_LAST};
@@ -172,8 +165,6 @@ public class DataHandler {
       //  }
         return result;
     }
-
-
     public String getAge() {
         // TODO Auto-generated method stub
         String[] columns = new String[] {KEY_AGE};
@@ -187,8 +178,6 @@ public class DataHandler {
       //  }
         return result;
     }
-
-
     public String getPhone() {
         // TODO Auto-generated method stub
         String[] columns = new String[] {KEY_PHONE};
@@ -202,7 +191,6 @@ public class DataHandler {
      //   }
         return result;
     }
-
 
     public String getId() {
         // TODO Auto-generated method stub

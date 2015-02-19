@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
  
 public class Splash extends Activity {
-	private static int SPLASH_TIME_OUT = 2500;
+
+	private static int SPLASH_TIME_OUT = 2000;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,10 +28,19 @@ public class Splash extends Activity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
+
+
+
+                try {
+                    Intent i = new Intent(Splash.this, ViewProfile.class);
+                    startActivity(i);
+                } finally {
                     Intent i = new Intent(Splash.this, Menu.class);
                     startActivity(i);
+                }
 
-                // close this activity
+                       // Intent i = new Intent(Splash.this, Menu.class);
+                       // startActivity(i);
                 finish();
             }
         }, SPLASH_TIME_OUT);

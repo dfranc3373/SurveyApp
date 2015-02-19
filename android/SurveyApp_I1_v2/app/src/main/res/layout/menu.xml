@@ -10,14 +10,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btn_fb_login"
+    <com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#CEF6F5"
-        android:text="Login with Facebook"
         android:textColor="#585858"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        android:layout_gravity="center_horizontal" />
+
+
 
 
     <Button
