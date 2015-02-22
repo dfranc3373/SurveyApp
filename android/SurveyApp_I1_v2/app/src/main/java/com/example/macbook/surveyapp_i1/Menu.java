@@ -2,7 +2,6 @@ package com.example.macbook.surveyapp_i1;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,12 +21,12 @@ import java.util.Arrays;
 
 public class Menu extends Activity implements OnClickListener{
 
-    SharedPreferences sPref;
-
 	Button sign_up;
 	Button view_profile;
     private String TAG = "LoginWithFB";
     String get_age, get_name, get_gender, get_email, get_id;
+
+    SharedPrefsHandler sph;
 	
 	protected void onCreate(final Bundle savedInstanceState) {
 		// TODO Auto-generated method stub	
@@ -58,7 +57,7 @@ public class Menu extends Activity implements OnClickListener{
                     Log.i(TAG,"Access Token"+ session.getAccessToken());
 
                     String fbToken = session.getAccessToken();
-                    saveSharedPreferences(Constants.FB_TOKEN, fbToken);
+                    sph.saveSharedPreferences(Constants.FB_TOKEN, fbToken);
 
                     Request.executeMeRequestAsync(session,
                             new Request.GraphUserCallback() {
@@ -81,10 +80,10 @@ public class Menu extends Activity implements OnClickListener{
                                         entry.close();
 
                                         //Save to sharedPreferences
-                                        saveSharedPreferences(Constants.FB_USER_ID, get_id);
-                                        saveSharedPreferences(Constants.FB_USER_NAME, get_name);
-                                        saveSharedPreferences(Constants.FB_USER_EMAIL, get_email);
-                                        saveSharedPreferences(Constants.FB_USER_GENDER, get_gender);
+                                        sph.saveSharedPreferences(Constants.FB_USER_ID, get_id);
+                                        sph.saveSharedPreferences(Constants.FB_USER_NAME, get_name);
+                                        sph.saveSharedPreferences(Constants.FB_USER_EMAIL, get_email);
+                                        sph.saveSharedPreferences(Constants.FB_USER_GENDER, get_gender);
 
                                         Intent intent = new Intent(
                                                 "android.intent.action.REGISTERING");
@@ -95,7 +94,6 @@ public class Menu extends Activity implements OnClickListener{
                                 }
                             });
                 }
-
             }
         });
 
@@ -120,14 +118,6 @@ public class Menu extends Activity implements OnClickListener{
             }
         });
 	}
-
-    private void saveSharedPreferences(String fieldName, String fieldContent){
-
-        sPref = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor ed = sPref.edit();
-        ed.putString(fieldName, fieldContent);
-        ed.apply();
-    }
 
 
 	@Override
@@ -162,7 +152,6 @@ public class Menu extends Activity implements OnClickListener{
             Log.i(TAG, "Logged out...");
         }
     }
-
 
 
     @Override
