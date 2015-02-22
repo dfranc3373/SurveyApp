@@ -7,8 +7,6 @@ import android.widget.TextView;
 
 public class ViewProfile extends Activity implements View.OnClickListener {
 
-
-    long id;
     DataHandler info = new DataHandler(this);
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,17 +17,10 @@ public class ViewProfile extends Activity implements View.OnClickListener {
         TextView tv_name = (TextView) findViewById(R.id.dbview_name);
         TextView tv_phone = (TextView) findViewById(R.id.dbview_phone);
 
-        //Open database
+        //read from db
         info.open();
-
-        String name = info.getFirstLast();
-        tv_name.setText(name);
-
-        String phone = info.getPhone();
-
-        tv_phone.setText(phone);
-
-        //Close database for security purposes.
+        tv_name.setText(info.getFirstLast());
+        tv_phone.setText(info.getPhone());
         info.close();
     }
 
@@ -38,5 +29,4 @@ public class ViewProfile extends Activity implements View.OnClickListener {
     public void onClick(View v) {
 
     }
-
 }

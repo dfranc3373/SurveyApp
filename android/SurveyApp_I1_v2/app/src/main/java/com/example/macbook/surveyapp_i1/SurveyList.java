@@ -1,5 +1,6 @@
 package com.example.macbook.surveyapp_i1;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,19 +33,17 @@ public class SurveyList extends ActionBarActivity {
         switch (id){
 
             case R.id.menu_coupons:
-
                 //show coupons list activity
 
                 break;
 
             case R.id.menu_profile:
-
                 //show user profile
-
+                Intent intent = new Intent("android.intent.action.VIEWPROFILE");
+                startActivity(intent);
                 break;
 
             case R.id.menu_logout:
-
                 // logout user and show main menu
 
                 break;
