@@ -8,9 +8,14 @@ import android.content.SharedPreferences;
  */
 public class SharedPrefsHandler {
 
-    Context context = this.context;
+    Context context;
+    SharedPreferences sPref;
 
-    SharedPreferences sPref = context.getSharedPreferences("com.example.macbook.surveyapp_i1", context.MODE_PRIVATE);
+    public SharedPrefsHandler() {
+        context = this.context;
+        sPref = context.getSharedPreferences
+                ("com.example.macbook.surveyapp_i1", context.MODE_PRIVATE);
+    }
 
     public void saveSharedPreferences(String fieldName, String fieldContent){
 

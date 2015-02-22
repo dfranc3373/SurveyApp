@@ -43,12 +43,14 @@
         android:textSize="25dp" />
 
     <Button
-        android:id="@+id/btn_test"
+        android:id="@+id/btn_survey_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#CEF6F5"
         android:layout_marginTop="50dp"
-        android:text=" " />
+        android:text="Show Surveys"
+        android:textColor="#585858"
+        android:textSize="25dp" />
 
 
 </LinearLayout>

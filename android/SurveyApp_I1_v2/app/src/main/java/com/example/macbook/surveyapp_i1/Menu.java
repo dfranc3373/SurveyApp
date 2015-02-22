@@ -21,8 +21,9 @@ import java.util.Arrays;
 
 public class Menu extends Activity implements OnClickListener{
 
-	Button sign_up;
-	Button view_profile;
+	Button btn_sign_up;
+	Button btn_view_profile;
+    Button btn_show_surveys;
     private String TAG = "LoginWithFB";
     String get_age, get_name, get_gender, get_email, get_id;
 
@@ -33,8 +34,10 @@ public class Menu extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
 
-        sign_up = (Button) findViewById(R.id.btn_sign_up);
-        view_profile = (Button) findViewById(R.id.btn_view_profile);
+        btn_sign_up = (Button) findViewById(R.id.btn_sign_up);
+        btn_view_profile = (Button) findViewById(R.id.btn_view_profile);
+        btn_show_surveys = (Button) findViewById(R.id.btn_survey_list);
+
         LoginButton authButton = (LoginButton) findViewById(R.id.authButton);
 
         authButton.setOnErrorListener(new LoginButton.OnErrorListener() {
@@ -54,7 +57,7 @@ public class Menu extends Activity implements OnClickListener{
             public void call(Session session, SessionState state, Exception exception) {
 
                 if (session.isOpened()) {
-                    Log.i(TAG,"Access Token"+ session.getAccessToken());
+                    Log.i(TAG, "Access Token" + session.getAccessToken());
 
                     String fbToken = session.getAccessToken();
                     sph.saveSharedPreferences(Constants.FB_TOKEN, fbToken);
@@ -62,7 +65,7 @@ public class Menu extends Activity implements OnClickListener{
                     Request.executeMeRequestAsync(session,
                             new Request.GraphUserCallback() {
                                 @Override
-                                public void onCompleted(GraphUser user,Response response) {
+                                public void onCompleted(GraphUser user, Response response) {
                                     if (user != null) {
                                         Log.i(TAG, "User ID " + user.getId());
                                         Log.i(TAG, "Email " + user.asMap().get("email"));
@@ -97,18 +100,17 @@ public class Menu extends Activity implements OnClickListener{
             }
         });
 
-        sign_up.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Intent intent = new Intent("android.intent.action.SIGNUP");
-				  //  intent.addCategory(Intent.CATEGORY_HOME);
-				    startActivity(intent);
-				}
-			});
+        btn_sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Intent intent = new Intent("android.intent.action.SIGNUP");
+                //  intent.addCategory(Intent.CATEGORY_HOME);
+                startActivity(intent);
+            }
+        });
 
-        //Art: need for testing purposes
-        view_profile.setOnClickListener(new View.OnClickListener() {
+        btn_view_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
@@ -117,6 +119,19 @@ public class Menu extends Activity implements OnClickListener{
                 startActivity(intent);
             }
         });
+
+        btn_show_surveys.setOnClickListener(new OnClickListener(){
+
+            public void onClick(View v){
+
+                Intent intent = new Intent("android.intent.action.SURVEYLIST");
+
+                startActivity(intent);
+            }
+
+        });
+
+
 	}
 
 
