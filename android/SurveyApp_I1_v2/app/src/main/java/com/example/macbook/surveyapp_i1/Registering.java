@@ -10,11 +10,14 @@ import android.os.Bundle;
 import android.os.Handler;
 
 public class Registering extends Activity {
-	private static int SPLASH_TIME_OUT = 3500;
+
+    private static int SPLASH_TIME_OUT = 3500;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splashregistering);
+
         new Handler().postDelayed(new Runnable() {
         	 
             /*
@@ -24,9 +27,10 @@ public class Registering extends Activity {
  
             @Override
             public void run() {
+
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(Registering.this, Menu.class);
+                Intent i = new Intent(Registering.this, ViewProfile.class);
                 startActivity(i);
  
                 // close this activity
@@ -34,6 +38,8 @@ public class Registering extends Activity {
             }
         }, SPLASH_TIME_OUT);
     }
+
+
     protected void onPause(){
     	super.onPause();
     	finish();
