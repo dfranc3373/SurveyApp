@@ -16,8 +16,29 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.LoginButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.apache.http.HeaderElement;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Menu extends Activity implements OnClickListener{
 
@@ -88,6 +109,18 @@ public class Menu extends Activity implements OnClickListener{
                                         sph.saveSharedPreferences(Constants.FB_USER_EMAIL, get_email);
                                         sph.saveSharedPreferences(Constants.FB_USER_GENDER, get_gender);
 
+                                        Thread t = new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+
+
+                                                postData(get_email, get_id);
+
+                                            }
+                                        });
+
+                                        t.start();
+
                                         Intent intent = new Intent(
                                                 "android.intent.action.REGISTERING");
                                         startActivity(intent);
@@ -141,6 +174,150 @@ public class Menu extends Activity implements OnClickListener{
 		
 	}
 
+    public void postData(String email, String password) {
+        // Create a new HttpClient and Post Header
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpPost httppost = new HttpPost("http://survey-app-texastech.appspot.com/login");
+
+        try {
+            // Add your data
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+            nameValuePairs.add(new BasicNameValuePair("email", email));
+            nameValuePairs.add(new BasicNameValuePair("password", "df121234"));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+            // Execute HTTP Post Request
+            HttpResponse response = httpclient.execute(httppost);
+
+            String json = getResponseBody(response);
+
+            if(json.length() != 0) {
+
+                Gson gson = new Gson();
+
+                Models.Response r = gson.fromJson(json, new TypeToken<Models.Response>() {}.getType());
+
+                if(r.Success) {
+
+                    Log.i("Log User in", "User data has been verified");
+
+                }
+
+            }
+
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+
+            Log.i("Error", e.getMessage());
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+
+            Log.i("Error", e.getMessage());
+        }
+    }
+
+    public static String getResponseBody(HttpResponse response) {
+
+        String response_text = null;
+        HttpEntity entity = null;
+        try {
+            entity = response.getEntity();
+            response_text = _getResponseBody(entity);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            if (entity != null) {
+                try {
+                    entity.consumeContent();
+                } catch (IOException e1) {
+                }
+            }
+        }
+        return response_text;
+    }
+
+    public static String _getResponseBody(final HttpEntity entity) throws IOException, ParseException {
+
+        if (entity == null) {
+            throw new IllegalArgumentException("HTTP entity may not be null");
+        }
+
+        InputStream instream = entity.getContent();
+
+        if (instream == null) {
+            return "";
+        }
+
+        if (entity.getContentLength() > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException(
+
+                    "HTTP entity too large to be buffered in memory");
+        }
+
+        String charset = getContentCharSet(entity);
+
+        if (charset == null) {
+
+            charset = HTTP.DEFAULT_CONTENT_CHARSET;
+
+        }
+
+        Reader reader = new InputStreamReader(instream, charset);
+
+        StringBuilder buffer = new StringBuilder();
+
+        try {
+
+            char[] tmp = new char[1024];
+
+            int l;
+
+            while ((l = reader.read(tmp)) != -1) {
+
+                buffer.append(tmp, 0, l);
+
+            }
+
+        } finally {
+
+            reader.close();
+
+        }
+
+        return buffer.toString();
+
+    }
+
+    public static String getContentCharSet(final HttpEntity entity) throws ParseException {
+
+        if (entity == null) {
+            throw new IllegalArgumentException("HTTP entity may not be null");
+        }
+
+        String charset = null;
+
+        if (entity.getContentType() != null) {
+
+            HeaderElement values[] = entity.getContentType().getElements();
+
+            if (values.length > 0) {
+
+                NameValuePair param = values[0].getParameterByName("charset");
+
+                if (param != null) {
+
+                    charset = param.getValue();
+
+                }
+
+            }
+
+        }
+
+        return charset;
+
+    }
 
     @Override
     protected void onResume() {

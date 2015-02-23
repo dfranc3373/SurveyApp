@@ -5,6 +5,6 @@ package Models;
  */
 public class Response {
     
-    Boolean success;
-    Object model;
+    public Boolean Success;
+    public Object Model;
 }
