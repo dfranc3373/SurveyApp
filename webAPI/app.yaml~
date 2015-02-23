@@ -1,0 +1,26 @@
+application: survey-app-texastech
+version: 3
+runtime: php
+api_version: 1
+
+handlers:
+- url: /(.+\.php)$
+  script: \1
+
+- url: /login
+  script: www/login.php
+  secure: optional
+
+- url: /register_user
+  script: www/login.php
+  secure: optional
+
+- url: /
+  script: www/
+  secure: optional
+
+# Serve images as static resources.
+- url: /(.+\.(gif|png|jpg))$
+  static_files: \1
+  upload: .+\.(gif|png|jpg)$
+  application_readable: true

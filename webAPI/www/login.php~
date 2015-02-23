@@ -1,10 +1,10 @@
 <?php
 
-include("../classes/sql.php");
+include("../class/sql.php");
 
 if(!isset($_POST['email'])) {
 
-	$arr = array('Success' => "false", 'UserID' => '', 'Email' => '', 'FB' => '', 'Gender' => '', 'Age_Range' => '', 'Token' => '');
+	$arr = array('Success' => "false", 'Model' => array('UserID' => '', 'Email' => '', 'FB' => '', 'Gender' => '', 'Age_Range' => '', 'Token' => ''));
 
 	echo json_encode($arr);
 
@@ -14,15 +14,15 @@ if(!isset($_POST['email'])) {
 
 	if(isset($_POST['fb_login'])) {
 
-		$sth = $db->prepare("SELECT * FROM `users` WHERE `Email` = :email", `Password` = :password);
+		$sth = $db->prepare("SELECT * FROM `Users` WHERE `Email` = :email AND `Password` = :password");
 
 		$sth->setFetchMode(PDO::FETCH_OBJ);
 
-		$sth->execute(array("email" => $_POST["email"], "Password" => $_POST["fb_id"]));
+		$sth->execute(array("email" => $_POST["email"], "password" => $_POST["password"]));
 
 		$results = $sth->fetch();
 
-		if(count($results) == 1) {
+		if($sth->rowCount() == 1) {
 
 			$token = md5(rand() . rand());
 
@@ -30,15 +30,15 @@ if(!isset($_POST['email'])) {
 
 			$sth1->execute(array("token" => $token, "email" => $_POST["email"]));
 
-			$json = array('Success' => "true", 'UserID' => $results->UserID, 'Email' => $results->Email, 'FB' => 'true', 'Gender' => $results->Gender, 'Age_Range' => $results->Age_Range, 'Token' => $token);
+			$json = array('Success' => "true", 'Model' => array('UserID' => $results->UserID, 'Email' => $results->Email, 'FB' => 'true', 'Gender' => $results->Gender, 'Age_Range' => $results->Age_Range, 'Token' => $token));
 
-			return json_encode($json);
+			echo json_encode($json);
 
 			exit();
 
 		} else {
 
-			$arr = array('Success' => "false", 'UserID' => '', 'Email' => '', 'FB' => '', 'Gender' => '', 'Age_Range' => '', 'Token' => '');
+			$arr = array('Success' => "false", 'Model' => array('UserID' => '', 'Email' => '', 'FB' => '', 'Gender' => '', 'Age_Range' => '', 'Token' => ''));
 
 			echo json_encode($arr);
 
@@ -48,31 +48,33 @@ if(!isset($_POST['email'])) {
 
 	}
 
-	$sth = $db->prepare("SELECT * FROM `users` WHERE `Email` = :email AND `Password` = :password");
+		$sth0 = $db->prepare("SELECT * FROM `Users` WHERE `Email` = :email AND `Password` = :password");
 
-		$sth->setFetchMode(PDO::FETCH_OBJ);
+		$sth0->setFetchMode(PDO::FETCH_OBJ);
 
-		$sth->execute(array("email" => $_POST["email"], "password" => $_POST["password"]));
+		$sth0->execute(array("email" => $_POST["email"], "password" => $_POST["password"]));
 
-		$results = $sth->fetch();
+		$results = $sth0->fetch();
 
-		if(count($results) == 1) {
+		if($sth0->rowCount() == 1) {
 
 			$token = md5(rand() . rand());
 
 			$sth1 = $db->prepare("UPDATE `Users` SET `Token` = :token WHERE `Email` = :email");
 
-			$sth1->execute(array("Email" => $token, "Email" => $_POST["email"]));
+			$sth1->setFetchMode(PDO::FETCH_OBJ);
 
-			$json = array('Success' => "true", 'UserID' => $results->UserID, 'Email' => $results->Email, 'FB' => 'false', 'Gender' => $results->Gender, 'Age_Range' => $results->Age_Range, 'Token' => $token);
+			$sth1->execute(array("token" => $token, "email" => $_POST["email"]));
 
-			return json_encode($json);
+			$json = array('Success' => "true", 'Model' => array('UserID' => $results->UserID, 'Email' => $results->Email, 'FB' => 'false', 'Gender' => $results->Gender, 'Age_Range' => $results->Age_Range, 'Token' => $token));
+
+			echo json_encode($json);
 
 			exit();
 
 		} else {
 
-			$arr = array('Success' => "false", 'UserID' => '', 'Email' => '', 'FB' => '', 'Gender' => '', 'Age_Range' => '', 'Token' => '');
+			$arr = array('Success' => "false", 'Model' => array('UserID' => '', 'Email' => '', 'FB' => '', 'Gender' => '', 'Age_Range' => '', 'Token' => ''));
 
 			echo json_encode($arr);
 
