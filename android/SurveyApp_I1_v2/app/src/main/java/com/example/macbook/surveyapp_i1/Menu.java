@@ -1,6 +1,7 @@
 package com.example.macbook.surveyapp_i1;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +48,8 @@ public class Menu extends Activity implements OnClickListener{
     Button btn_show_surveys;
     private String TAG = "LoginWithFB";
     String get_age, get_name, get_gender, get_email, get_id;
+
+    ProgressDialog dialog;
 
     SharedPrefsHandler sph;
 	
@@ -109,12 +112,23 @@ public class Menu extends Activity implements OnClickListener{
                                         sph.saveSharedPreferences(Constants.FB_USER_EMAIL, get_email);
                                         sph.saveSharedPreferences(Constants.FB_USER_GENDER, get_gender);
 
+                                        dialog = ProgressDialog.show(Menu.this, "", "Loading...", true);
+
                                         Thread t = new Thread(new Runnable() {
                                             @Override
                                             public void run() {
 
 
                                                 postData(get_email, get_id);
+
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+
+                                                        dialog.hide();
+
+                                                    }
+                                                });
 
                                             }
                                         });
