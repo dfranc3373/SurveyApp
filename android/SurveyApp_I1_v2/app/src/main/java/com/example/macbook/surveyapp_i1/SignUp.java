@@ -55,7 +55,7 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
 
                 DataHandler entry = new DataHandler(SignUp.this);
                 entry.open();
-                entry.createEntry(getFirstName, getLastName, getAge, getPhone);
+                entry.createEntry(getFirstName, getLastName, getAge, getPhone, "Token");
                 entry.close();
 
                 Intent intent = new Intent("android.intent.action.REGISTERING");

@@ -17,6 +17,7 @@ public class DataHandler {
     public static final String KEY_LAST = "Last";
     public static final String KEY_AGE = "Age";
     public static final String KEY_PHONE = "Phone";
+    public static final String KEY_TOKEN = "Token";
 	public static final String TABLE_NAME = "myTable";
 	public static final String DATABASE_NAME = "myDatabase";
 	public static final int DATABASE_VERSION = 1;
@@ -49,7 +50,8 @@ public class DataHandler {
 			+ KEY_NAME + " text not null, "
                     + KEY_LAST + " text not null, "
                     + KEY_AGE + " integer not NULL, "
-			+ KEY_PHONE + " integer not null);");
+			+ KEY_PHONE + " integer not NULL, "
+                    + KEY_TOKEN + " integer not null);");
 		}
 
 
@@ -69,12 +71,13 @@ public class DataHandler {
 		dbhelper.close();
 	}
 
-	public long createEntry(String Name, String Last, String Age, String Phone) {
+	public long createEntry(String Name, String Last, String Age, String Phone, String Token) {
 		ContentValues content = new ContentValues();
 		content.put(KEY_NAME, Name);
         content.put(KEY_LAST, Last);
         content.put(KEY_AGE, Age);
         content.put(KEY_PHONE, Phone);
+        content.put(KEY_PHONE, Token);
 		return db.insert(TABLE_NAME, null, content);
 	}
 

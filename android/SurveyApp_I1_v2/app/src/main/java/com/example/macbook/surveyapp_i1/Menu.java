@@ -46,11 +46,20 @@ public class Menu extends Activity implements OnClickListener{
 	Button btn_view_profile;
     Button btn_show_surveys;
     private String TAG = "LoginWithFB";
-    String get_age, get_name, get_gender, get_email, get_id;
+//<<<<<<< Updated upstream
+    String get_id;
 
     SharedPrefsHandler sph;
 	
-	protected void onCreate(final Bundle savedInstanceState) {
+//	protected void onCreate(final Bundle savedInstanceState) {
+//=======
+    String get_age="unknown";
+    String get_name="unknown";
+    String get_gender="unknown";
+    String get_email="unknown";
+
+	protected void onCreate(Bundle savedInstanceState) {
+//>>>>>>> Stashed changes
 		// TODO Auto-generated method stub	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);

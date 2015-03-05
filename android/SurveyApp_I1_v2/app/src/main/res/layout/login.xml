@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#CEF6F5">
+
+
+
+
+
+
+    <com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CEF6F5"
+        android:textColor="#585858"
+        android:textSize="25dp"
+        android:layout_gravity="center_horizontal" />
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="35dp" />
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text=" OR"
+        android:id="@+id/or"
+        android:background="#FFFFFF"
+        android:textSize="35dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="25"
+        android:id="@+id/first_name" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Username"
+        android:layout_marginTop="20dp"
+        android:id="@+id/tv_user_name"
+        android:textSize="25dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="25"
+        android:id="@+id/last_name" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" How old are you:"
+        android:layout_marginTop="20dp"
+        android:id="@+id/tv_age"
+        android:textSize="25dp" />
+
+
+
+    <Spinner
+        android:id="@+id/spinner_age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" Select your age range:"
+        android:textSize="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Enter your phone number:"
+        android:layout_marginTop="20dp"
+        android:id="@+id/tv_phone"
+        android:textSize="25dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:ems="25"
+        android:id="@+id/phone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" "
+        android:id="@+id/tv_space"
+        android:textSize="25dp" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register" />
+
+
+
+</LinearLayout>
