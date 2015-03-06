@@ -1,5 +1,6 @@
 package com.example.macbook.surveyapp_i1;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,8 +19,8 @@ public class TakeSurvey extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_take_survey, menu);
-        return true;
+        getMenuInflater().inflate(R.menu.menu_survey_list, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -29,11 +30,24 @@ public class TakeSurvey extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        switch (id){
 
+            case R.id.menu_coupons:
+                //show coupons list activity
+
+                break;
+
+            case R.id.menu_profile:
+                //show user profile
+                Intent intent = new Intent("android.intent.action.VIEWPROFILE");
+                startActivity(intent);
+                break;
+
+            case R.id.menu_logout:
+                // logout user and show main menu
+
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 }

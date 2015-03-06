@@ -16,6 +16,7 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:prompt="@string/sp_date_title"
             android:text="Choose Order">
         </Spinner>
         <Spinner
@@ -23,10 +24,11 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:prompt="@string/sp_category_title"
             android:text="Choose Category">
         </Spinner>
         <Button
-            android:id="@+id/filterOne"
+            android:id="@+id/btnRandom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

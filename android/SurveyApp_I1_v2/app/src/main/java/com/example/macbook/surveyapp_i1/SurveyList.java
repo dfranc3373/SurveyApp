@@ -1,27 +1,30 @@
 package com.example.macbook.surveyapp_i1;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class SurveyList extends Activity {
+public class SurveyList extends ActionBarActivity {
 
-    Spinner spOrder;
+    Spinner spDate;
     Spinner spCategory;
     Button btnRandom;
 
@@ -37,27 +40,46 @@ public class SurveyList extends Activity {
 
     ListView lvSurveyList;
 
+    //spinners items values
+    String[] spDateItems = {"Newest First", "Oldest First"};
+    String[] spCategoryItems = {"Show All", "Electronics", "Home Improvement", "Garden"};
+
+    //spinners values constants
+    final int SP_DATE_NEWEST = 0;
+    final int SP_DATE_OLDEST = 1;
+
+    final int SP_CATEGORY_ALL = 0;
+    final int SP_CATEGORY_ELECTRONICS = 1;
+    final int SP_CATEGORY_HOME = 2;
+    final int SP_CATEGORY_GARDEN = 3;
+
+    //toasts messages
+    final String TOAST_TEXT_NEWEST_FIRST = "Showing Newest Surveys First";
+
+    Context context = this;
+
+    //Test surveys data
+    String[] surveyTitle = { "Survey One", "Survey Two", "Survey Three",
+            "Survey Four", "Survey Five", "Survey Two", "Survey Three",
+            "Survey Four", "Survey Five", "Survey Two", "Survey Three",
+            "Survey Four", "Survey Five" };
+    String[] surveyDescription = { "Description One", "Description Two", "Description Three",
+            "Description Four", "Description Five", "Description Two", "Description Three",
+            "Description Four", "Description Five", "Description Two", "Description Three",
+            "Description Four", "Description Five" };
+    String[] surveyCategory = { "Electronics", "Home Improvement", "Garden",
+            "Garden", "Electronics", "Home Improvement", "Garden",
+            "Garden", "Electronics", "Home Improvement", "Garden",
+            "Garden", "Electronics"};
+    int img = R.drawable.ic_launcher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.survey_list);
 
-        //Test surveys data
-        String[] surveyTitle = { "Survey One", "Survey Two", "Survey Three",
-                "Survey Four", "Survey Five", "Survey Two", "Survey Three",
-                "Survey Four", "Survey Five", "Survey Two", "Survey Three",
-                "Survey Four", "Survey Five" };
-        String[] surveyDescription = { "Description One", "Description Two", "Description Three",
-                "Description Four", "Description Five", "Description Two", "Description Three",
-                "Description Four", "Description Five", "Description Two", "Description Three",
-                "Description Four", "Description Five" };
-        String[] surveyCategory = { "Electronics", "Home Improvement", "Garden",
-                "Garden", "Electronics", "Home Improvement", "Garden",
-                "Garden", "Electronics", "Home Improvement", "Garden",
-                "Garden", "Electronics"};
-        int img = R.drawable.ic_launcher;
-
+        setSpinners();
 
         //maps for the list
         ArrayList<Map<String, Object>> data =
@@ -100,6 +122,20 @@ public class SurveyList extends Activity {
             }
         });
 
+
+        btnRandom = (Button) findViewById(R.id.btnRandom);
+
+        btnRandom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //sort survey list in random order
+
+                //show toast that random order is selected
+                Toast.makeText(context, R.string.toast_show_random, Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
 
@@ -136,5 +172,102 @@ public class SurveyList extends Activity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void setSpinners(){
+
+        //create adapters
+        ArrayAdapter<String> adapterDate =
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spDateItems);
+        adapterDate.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ArrayAdapter<String> adapterCategory =
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spCategoryItems);
+        adapterCategory.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        spDate = (Spinner) findViewById(R.id.spFilterDate);
+        spCategory = (Spinner) findViewById(R.id.spFilterCategory);
+
+        spDate.setAdapter(adapterDate);
+        spCategory.setAdapter(adapterCategory);
+
+        //spDate.setPrompt("Choose Order");
+        //spCategory.setPrompt("Choose Category");
+
+        //spDate.setSelection(-1);
+        //spCategory.setSelection(-1);
+
+
+        spDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case SP_DATE_NEWEST:
+
+                        //show surveys newest first
+
+                        //show toast
+                        Toast.makeText(context, R.string.toast_show_newest_first, Toast.LENGTH_SHORT).show();
+
+
+                        break;
+                    case SP_DATE_OLDEST:
+
+                        //show surveys newest first
+
+                        //show toast
+                        Toast.makeText(context, R.string.toast_show_oldest_first, Toast.LENGTH_SHORT).show();
+
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                switch (position){
+                    case SP_CATEGORY_ALL:
+                        //show all surveys
+
+                        //show toast
+                        Toast.makeText(context, R.string.toast_show_category_all, Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case SP_CATEGORY_ELECTRONICS:
+                        //show category
+
+                        //show toast
+                        Toast.makeText(context, R.string.toast_show_category_electronics, Toast.LENGTH_SHORT).show();
+
+                        break;
+                    case SP_CATEGORY_HOME:
+                        //show category
+
+                        //show toast
+                        Toast.makeText(context, R.string.toast_show_category_home, Toast.LENGTH_SHORT).show();
+
+                        break;
+                    case SP_CATEGORY_GARDEN:
+                        //show category
+
+                        //show toast
+                        Toast.makeText(context, R.string.toast_show_category_garden, Toast.LENGTH_SHORT).show();
+
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }
