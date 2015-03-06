@@ -46,8 +46,4 @@
             android:layout_height="23dip"
             android:layout_marginRight="10dip"/>
 </LinearLayout>
-<<<<<<< HEAD
-<!-- From: file:/Users/macbook/AndroidStudioProjects/SurveyApp/android/SurveyApp_I1_v2/facebook/res/layout/com_facebook_picker_list_row.xml -->
-=======
 <!-- From: file:/Users/Artsiom/Documents/Projects/SurveyApp/android/SurveyApp_I1_v2/facebook/res/layout/com_facebook_picker_list_row.xml -->
->>>>>>> 0a048665cb564dc2cdb700788dfe3382975bf454

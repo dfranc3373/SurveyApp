@@ -25,8 +25,4 @@
     <item android:state_focused="true"                                                             android:drawable="@drawable/com_facebook_picker_list_focused" />
 
 </selector>
-<<<<<<< HEAD
-<!-- From: file:/Users/macbook/AndroidStudioProjects/SurveyApp/android/SurveyApp_I1_v2/facebook/res/drawable/com_facebook_picker_list_selector.xml -->
-=======
 <!-- From: file:/Users/Artsiom/Documents/Projects/SurveyApp/android/SurveyApp_I1_v2/facebook/res/drawable/com_facebook_picker_list_selector.xml -->
->>>>>>> 0a048665cb564dc2cdb700788dfe3382975bf454

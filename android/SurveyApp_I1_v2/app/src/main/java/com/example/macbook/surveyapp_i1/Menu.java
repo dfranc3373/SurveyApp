@@ -92,7 +92,7 @@ public class Menu extends Activity implements OnClickListener{
                 if (session.isOpened()) {
                     Log.i(TAG, "Access Token" + session.getAccessToken());
 
-                    String fbToken = session.getAccessToken();
+                    final String fbToken = session.getAccessToken();
                     sph.saveSharedPreferences(Constants.FB_TOKEN, fbToken);
 
                     Request.executeMeRequestAsync(session,
@@ -112,7 +112,10 @@ public class Menu extends Activity implements OnClickListener{
                                         //Save to db
                                         DataHandler entry = new DataHandler(Menu.this);
                                         entry.open();
-                                        entry.createEntry(get_name, get_email, get_name, get_gender);
+
+                                        //Art: Added fbToken to params to avoid error,
+                                        //not sure if it is the token we want to use
+                                        entry.createEntry(get_name, get_email, get_name, get_gender, fbToken);
                                         entry.close();
 
                                         //Save to sharedPreferences
@@ -181,7 +184,6 @@ public class Menu extends Activity implements OnClickListener{
             public void onClick(View v){
 
                 Intent intent = new Intent("android.intent.action.SURVEYLIST");
-
                 startActivity(intent);
             }
 

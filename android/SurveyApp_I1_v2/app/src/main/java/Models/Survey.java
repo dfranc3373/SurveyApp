@@ -7,10 +7,10 @@ import java.util.Date;
  */
 public class Survey {
 
-    String Name;
     int SurveyID;
+    String Title;
+    String Description;
+    String Category;
     String CompanyName;
     Date DateCreated;
-
-
 }
