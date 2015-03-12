@@ -67,6 +67,8 @@ public class Menu extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
 
+        sph = new SharedPrefsHandler(this);
+
         btn_sign_up = (Button) findViewById(R.id.btn_sign_up);
         btn_view_profile = (Button) findViewById(R.id.btn_view_profile);
         btn_show_surveys = (Button) findViewById(R.id.btn_survey_list);

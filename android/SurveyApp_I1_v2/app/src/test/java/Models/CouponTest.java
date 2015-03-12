@@ -17,4 +17,5 @@ public class CouponTest{
         Coupon coupon = new Coupon();
         assertNotNull(coupon);
     }
+
 }
