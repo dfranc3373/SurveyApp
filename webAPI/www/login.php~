@@ -6,7 +6,7 @@ if(!isset($_POST['email'])) {
 
 	$arr = array('Success' => "false", 'Model' => array('UserID' => '', 'Email' => '', 'FB' => '', 'Gender' => '', 'Age_Range' => '', 'Token' => ''));
 
-	echo json_encode($arr);
+	json_encode($arr);
 
 	exit();
 

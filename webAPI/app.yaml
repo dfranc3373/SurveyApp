@@ -4,6 +4,11 @@ runtime: php
 api_version: 1
 
 handlers:
+
+- url: /add_coupon2
+  script: site/home/add_coupon2.php
+  secure: optional
+
 - url: /(.+\.php)$
   script: \1
 
@@ -16,8 +21,20 @@ handlers:
   secure: optional
 
 - url: /
-  script: www/
+  script: site/index.php
   secure: optional
+
+- url: /(.+)
+  script: \1
+
+- url: /site/(.+)
+  script: site/\1
+
+- url: /www/(.+)
+  script: www/\1
+
+- url: /home/(.+)
+  script: home/\1
 
 # Serve images as static resources.
 - url: /(.+\.(gif|png|jpg))$
