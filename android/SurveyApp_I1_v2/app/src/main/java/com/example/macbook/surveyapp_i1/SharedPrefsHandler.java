@@ -11,8 +11,7 @@ public class SharedPrefsHandler {
     Context context;
     SharedPreferences sPref;
 
-    public SharedPrefsHandler() {
-        context = this.context;
+    public SharedPrefsHandler(Context context) {
         sPref = context.getSharedPreferences
                 ("com.example.macbook.surveyapp_i1", context.MODE_PRIVATE);
     }
