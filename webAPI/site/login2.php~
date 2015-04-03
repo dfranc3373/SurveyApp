@@ -51,10 +51,6 @@ if($class->Success == "true") {
 
 } else {
 
-echo $sth->errorInfo();
-
-exit();
-
 	header("Location: login.php?message=" . urlencode("Wrong password"));
 
 }

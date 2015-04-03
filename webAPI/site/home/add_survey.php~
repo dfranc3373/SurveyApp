@@ -11,6 +11,34 @@ $upload_url = CloudStorageTools::createUploadUrl('add_coupon2', $options);*/
 
 include("header.php");
 
+$postdata = http_build_query(
+    array(
+        'company_id' => $_SESSION['company_id']
+    )
+);
+
+$opts = array('http' =>
+    array(
+        'method'  => 'POST',
+        'header'  => 'Content-type: application/x-www-form-urlencoded',
+        'content' => $postdata
+    )
+);
+
+$context  = stream_context_create($opts);
+
+$coupons = json_decode("");
+
+$result = file_get_contents($url . 'www/get_coupons.php', false, $context);
+
+$json = json_decode($result);
+
+if($json->Success == "true") {
+
+	$coupons = json_decode(json_encode($json->Model));
+
+}
+
 ?>
 
 <div class="container" style="max-width: 500px;">
@@ -18,6 +46,33 @@ include("header.php");
       <form class="form-signin" action="add_survey2.php" method="post" enctype="multipart/form-data">
 
         <h2 class="form-signin-heading">Add Survey</h2>
+
+	Coupon:
+	
+	<br />
+
+	<select id="coupon" name="coupon">
+
+		<option value="0" >Select a Coupon</option>
+
+		<?php
+
+			foreach($coupons as $coupon) {
+
+
+		?>
+
+		<option value="<?php echo $coupon->CouponID; ?>"><?php echo $coupon->Title; ?></option>
+
+		<?php
+
+			}
+
+
+		?>
+
+	</select>
+
         <label for="title" class="sr-only">Title</label>
         <input type="text" id="tilte" class="form-control" placeholder="Title" required autofocus name="title">
         <label for="description" class="sr-only">Description</label>

@@ -31,7 +31,7 @@ if(move_uploaded_file($_FILES['picture']['tmp_name'],  $target_path)) { }*/
 
 	echo "Start";
 
-	if($sth->execute(array("Name" => $_POST['title'], "Company" => $_SESSION['company_id'], "DateCreated" => (date("Y-m-d H:i:s")), "On" => "1", "AgeRange" => "1", "GenderType" => "1", "Coupon" => "1"))) {
+	if($sth->execute(array("Name" => $_POST['title'], "Company" => $_SESSION['company_id'], "DateCreated" => (date("Y-m-d H:i:s")), "On" => "1", "AgeRange" => "1", "GenderType" => "1", "Coupon" => $_POST['coupon']))) {
 
 		echo $survey = $db->lastInsertId();
 
