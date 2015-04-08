@@ -5,10 +5,10 @@ package Models;
  */
 public class User {
 
-    int UserID;
-    String Email;
-    Boolean FB;
-    int Gender;
-    int Age_Range;
-    String Token;
+    public int UserID;
+    public String Email;
+    public boolean FB;
+    public int Gender;
+    public int Age_Range;
+    public String Token;
 }

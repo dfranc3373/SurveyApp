@@ -1,10 +1,11 @@
-package model;
+package com.example.macbook.surveyapp_i1;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.macbook.surveyapp_i1.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,12 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import Models.Survey;
+import Models.User;
+
 /**
  * Created by administrator on 3/3/15.
  */
 public class API {
-
-    private SPTruckingAppConfigurationModel data;
 
     private Context context;
 
@@ -45,138 +47,22 @@ public class API {
 
         this.context = activity;
 
-        preferences = context.getSharedPreferences(CONSTANTS.PREF_NAME, 0);
-
-        this.data = gson.fromJson(preferences.getString(CONSTANTS.AppConfig, ""), new TypeToken<SPTruckingAppConfigurationModel>() {}.getType());
+        preferences = context.getSharedPreferences(Constants.PREF_NAME, 0);
 
     }
 
-    public boolean DataSync() {
+    public boolean Login(String Email, String Password) {
 
         Gson gson = new Gson();
 
-        data = gson.fromJson(preferences.getString(CONSTANTS.AppConfig, ""), new TypeToken<SPTruckingAppConfigurationModel>() {}.getType());
-
-        String url = this.data.CommunicationBaseURL + this.data.DataSyncMethodName;
+        String url = "http://survey-app-texastech.appspot.com/login";
 
         List<NameValuePair> values = new ArrayList<NameValuePair>();
 
-        values.add(new BasicNameValuePair("Username", preferences.getString(CONSTANTS.Username, "")));
-        values.add(new BasicNameValuePair("Password", ""));
-        values.add(new BasicNameValuePair("Token", preferences.getString(CONSTANTS.Token, "")));
-        values.add(new BasicNameValuePair("Model", ""));
-        values.add(new BasicNameValuePair("LastUpdate", String.valueOf(millisToFiletime(Long.decode(String.valueOf(data.LastUpdate))))));
-        values.add(new BasicNameValuePair("AppConfigVersion", String.valueOf(data.AppConfigurationVersion)));
-
-        sendRequest r = new sendRequest(url, values, preferences.getString(CONSTANTS.Token, ""));
-
-        r.execute();
-
-        String response = null;
-
-        try {
-
-            response = r.get();
-
-        } catch (InterruptedException e) {
-
-            e.printStackTrace();
-
-        } catch (ExecutionException e) {
-
-            e.printStackTrace();
-
-        }
-
-        try {
-
-            SPTruckingResponseModel SP = gson.fromJson(response, new TypeToken<SPTruckingResponseModel>() {}.getType());
-
-            if(SP.Success == true) {
-
-                SqlHelper sql = new SqlHelper(context);
-
-                String updateJSON = gson.toJson(SP.Updates);
-
-                SPTruckingUpdatesModel updates = gson.fromJson(updateJSON, new TypeToken<SPTruckingAppConfigurationModel>() {}.getType());
-
-                if(updates.Sites != null || updates.Sites.size() != 0) {
-
-                    for(SPTruckingSiteModel site : updates.Sites) {
-
-                        SPTruckingSiteModel old = null;
-
-                        old = sql.getSiteModelFromSiteName(site.Name);
-
-                        if(old == null) {
-
-                            sql.insertSiteModel(site);
-
-                        } else {
-
-                            sql.updateSiteModel(site);
-
-                        }
-
-                    }
-
-                }
-
-                if(updates.AppConfig != null) {
-
-                    SPTruckingAppConfigurationModel config = (SPTruckingAppConfigurationModel) updates.AppConfig;
-
-                    SharedPreferences.Editor editor = preferences.edit();
-
-                    editor.putString(CONSTANTS.AppConfig, gson.toJson(config));
-
-                    editor.apply();
-
-                    this.data = config;
-
-                }
-
-                /*if(SP.Updates)
-
-                for (SPTruckingSiteModel s : data.Sites) {
-
-                    if(sql.getSiteModelFromUniqueCode(s.UniqueCode) == null) {
-
-                        sql.insertSiteModel(s);
-
-                    }
-
-                }*/
-
-                return true;
-
-            }
-
-        } catch(Exception ex) {
-
-            return false;
-
-        }
-
-        return false;
-
-    }
-
-    public String Login(String Username, String Password) {
-
-        Gson gson = new Gson();
-
-        data = gson.fromJson(preferences.getString(CONSTANTS.AppConfig, ""), new TypeToken<SPTruckingAppConfigurationModel>() {}.getType());
-
-        String url = "http://199.193.116.90/service/token";
-
-        List<NameValuePair> values = new ArrayList<NameValuePair>();
-
-        values.add(new BasicNameValuePair("grant_type", "password"));
-        values.add(new BasicNameValuePair("UserName", Username));
+        values.add(new BasicNameValuePair("email", Email));
         values.add(new BasicNameValuePair("Password", Password));
 
-        sendRequest r = new sendRequest(url, values, "");
+        sendRequest r = new sendRequest(url, values);
 
         r.execute();
 
@@ -198,52 +84,61 @@ public class API {
 
         try {
 
-            SPTruckingAuthenticationResponseModel authentication = gson.fromJson(response, new TypeToken<SPTruckingAuthenticationResponseModel>() {}.getType());
+            Models.Response authentication = gson.fromJson(response, new TypeToken<Models.Response>() {}.getType());
 
             if(authentication.Success == true) {
 
-                return authentication.access_token;
+                User member = ((User) authentication.Model);
+
+                SharedPreferences.Editor edit = preferences.edit();
+
+                edit.putString(Constants.LoggedIn, "true");
+                edit.putString(Constants.APP_TOKEN, member.Token);
+                edit.putString(Constants.Email, member.Email);
+                edit.putString(Constants.UserID, String.valueOf(member.UserID));
+                edit.putString(Constants.FB, String.valueOf(member.FB));
+
+                edit.commit();
+
+                return true;
 
             } else {
 
-                return "Error: " + (authentication.DeactivationReasonID == 0 ? "Login Failed, Check Username and Password" : authentication.DeactivationReasonID);
+                return false;
 
             }
 
         } catch(Exception ex) {
 
-            return "Error: " + ex.toString();
+            return false;
 
         }
 
     }
 
-    public boolean CreateNewUser(SPTruckingNewUserModel model) {
+    public List<Survey> getSurveys(int LastSurveyIDStored) {
+
+        return getSurveysFunction(LastSurveyIDStored);
+
+    }
+
+    public List<Survey> getSurveys() {
+
+        return getSurveysFunction(0);
+
+    }
+
+    public List<Survey> getSurveysFunction(int LastSurveyIDStored) {
 
         Gson gson = new Gson();
 
-        data = gson.fromJson(preferences.getString(CONSTANTS.AppConfig, ""), new TypeToken<SPTruckingAppConfigurationModel>() {}.getType());
-
-        String url = this.data.CommunicationBaseURL + this.data.RegisterNewUserMethodName;
+        String url = "http://survey-app-texastech.appspot.com/get_surveys";
 
         List<NameValuePair> values = new ArrayList<NameValuePair>();
 
-        values.add(new BasicNameValuePair("Username", model.Username));
-        values.add(new BasicNameValuePair("Password", model.Password));
-        values.add(new BasicNameValuePair("UniqueCode", model.UniqueCode));
-        values.add(new BasicNameValuePair("UniqueDeviceID", model.UniqueDeviceID));
-        values.add(new BasicNameValuePair("DeviceType", model.DeviceType));
-        values.add(new BasicNameValuePair("OS", model.OS));
-        values.add(new BasicNameValuePair("FirstName", model.FirstName));
-        values.add(new BasicNameValuePair("LastName", model.LastName));
-        values.add(new BasicNameValuePair("Email", model.Email));
-        values.add(new BasicNameValuePair("SecurityQuestion", model.SecurityQuestion));
-        values.add(new BasicNameValuePair("SecurityAnswer", model.SecurityAnswer));
-        values.add(new BasicNameValuePair("Phone", model.Phone));
-        values.add(new BasicNameValuePair("TruckNumber", model.TruckNumber));
-        values.add(new BasicNameValuePair("DriverNumber", model.DriverNumber));
+        values.add(new BasicNameValuePair("last_survey", String.valueOf(LastSurveyIDStored)));
 
-        sendRequest r = new sendRequest(url, values, "");
+        sendRequest r = new sendRequest(url, values);
 
         r.execute();
 
@@ -265,37 +160,23 @@ public class API {
 
         try {
 
-            SPTruckingResponseModel SP = gson.fromJson(response, new TypeToken<SPTruckingResponseModel>() {}.getType());
+            Models.Response authentication = gson.fromJson(response, new TypeToken<Models.Response>() {}.getType());
 
-            if(SP.Success == true) {
+            if(authentication.Success == true) {
 
-                SPTruckingInitializationModel initalization = (SPTruckingInitializationModel) SP.Result;
+                List<Survey> surveys = gson.fromJson(gson.toJson(authentication.Model), new TypeToken<List<Survey>>(){}.getType());
 
-                SqlHelper sql = new SqlHelper(context);
-
-                /*if(SP.Updates)
-
-                for (SPTruckingSiteModel s : data.Sites) {
-
-                    if(sql.getSiteModelFromUniqueCode(s.UniqueCode) == null) {
-
-                        sql.insertSiteModel(s);
-
-                    }
-
-                }*/
-
-                return true;
+                return surveys;
 
             }
 
         } catch(Exception ex) {
 
-            return false;
+            return new ArrayList<Survey>();
 
         }
 
-        return false;
+        return new ArrayList<Survey>();
 
     }
 
@@ -307,13 +188,11 @@ public class API {
 
         private String Token;
 
-        public sendRequest(String url, List<NameValuePair> values, String token) {
+        public sendRequest(String url, List<NameValuePair> values) {
 
             this.URL = url;
 
             this.Values = values;
-
-            this.Token = token;
 
         }
 
@@ -331,20 +210,9 @@ public class API {
 
                 Header[] headers = null;
 
-                if(Token.length() == 0) {
-
                     headers = new Header[] {
                             new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
                     };
-
-                } else {
-
-                    headers = new Header[] {
-                            new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"),
-                            new BasicHeader("Authorization", "Bearer " + Token)
-                    };
-
-                }
 
                 request.setHeaders(headers);
 
@@ -387,19 +255,6 @@ public class API {
         protected void onPostExecute(String result) {
             //showDialog("Downloaded " + result + " bytes");
         }
-    }
-
-    private static final long FILETIME_EPOCH_DIFF = 11644473600000L;
-
-    /** One millisecond expressed in units of 100s of nanoseconds. */
-    private static final long FILETIME_ONE_MILLISECOND = 10 * 1000;
-
-    public long filetimeToMillis(final long filetime) {
-        return (filetime / FILETIME_ONE_MILLISECOND) - FILETIME_EPOCH_DIFF;
-    }
-
-    public long millisToFiletime(final long millis) {
-        return (millis + FILETIME_EPOCH_DIFF) * FILETIME_ONE_MILLISECOND;
     }
 
 }
