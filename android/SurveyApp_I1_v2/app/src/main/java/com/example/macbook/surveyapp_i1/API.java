@@ -31,6 +31,7 @@ import java.util.concurrent.ExecutionException;
 
 import Models.Survey;
 import Models.User;
+import Models.UserAnswer;
 
 /**
  * Created by administrator on 3/3/15.
@@ -177,6 +178,59 @@ public class API {
         }
 
         return new ArrayList<Survey>();
+
+    }
+
+    public boolean PostAnswers(List<UserAnswer> answers) {
+
+        Gson gson = new Gson();
+
+        String url = "http://survey-app-texastech.appspot.com/submit_useranswers";
+
+        List<NameValuePair> values = new ArrayList<NameValuePair>();
+
+        values.add(new BasicNameValuePair("question_answers", gson.toJson(answers)));
+        values.add(new BasicNameValuePair("user_id", preferences.getString(Constants.UserID, "")));
+
+        sendRequest r = new sendRequest(url, values);
+
+        r.execute();
+
+        String response = null;
+
+        try {
+
+            response = r.get();
+
+        } catch (InterruptedException e) {
+
+            e.printStackTrace();
+
+        } catch (ExecutionException e) {
+
+            e.printStackTrace();
+
+        }
+
+        try {
+
+            Models.Response authentication = gson.fromJson(response, new TypeToken<Models.Response>() {}.getType());
+
+            if(authentication.Success == true) {
+
+                return true;
+
+            } else {
+
+                return false;
+
+            }
+
+        } catch(Exception ex) {
+
+            return false;
+
+        }
 
     }
 
