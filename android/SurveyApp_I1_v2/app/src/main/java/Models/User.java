@@ -5,10 +5,63 @@ package Models;
  */
 public class User {
 
-    public int UserID;
-    public String Email;
-    public boolean FB;
-    public int Gender;
-    public int Age_Range;
-    public String Token;
+    private int UserID;
+    private String Email;
+    private boolean FB;
+    private int Gender;
+    private int Age_Range;
+    private String Token;
+
+    //setters
+
+    public void setUserID(int userID) {
+        this.UserID = userID;
+    }
+
+    public void setEmail(String email) {
+        this.Email = email;
+    }
+
+    public void setFB(boolean FB) {
+        this.FB = FB;
+    }
+
+    public void setGender(int gender) {
+        this.Gender = gender;
+    }
+
+    public void setAge_Range(int age_Range) {
+        this.Age_Range = age_Range;
+    }
+
+    public void setToken(String token) {
+        this.Token = token;
+    }
+
+
+    //getters
+
+    public int getUserID() {
+        return this.UserID;
+    }
+
+    public String getEmail() {
+        return this.Email;
+    }
+
+    public boolean isFB() {
+        return this.FB;
+    }
+
+    public int getGender() {
+        return this.Gender;
+    }
+
+    public int getAge_Range() {
+        return this.Age_Range;
+    }
+
+    public String getToken() {
+        return this.Token;
+    }
 }

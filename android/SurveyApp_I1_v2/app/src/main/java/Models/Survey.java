@@ -8,13 +8,90 @@ import java.util.List;
  */
 public class Survey {
 
-    int SurveyID;
-    String Title;
-    String Description;
-    String Category;
-    String CompanyName;
-    Date DateCreated;
-    Coupon Coupon;
-    Question Question;
-    List<QuestionAnswer> Answers;
+    private int SurveyID;
+    private String Title;
+    private String Description;
+    private String Category;
+    private String CompanyName;
+    private Date DateCreated;
+    private Coupon Coupon;
+    private Question Question;
+    private List<QuestionAnswer> Answers;
+
+    //setters
+
+    public void setSurveyID(int surveyID) {
+        this.SurveyID = surveyID;
+    }
+
+    public void setTitle(String title) {
+        this.Title = title;
+    }
+
+    public void setDescription(String description) {
+        this.Description = description;
+    }
+
+    public void setCategory(String category) {
+        this.Category = category;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.CompanyName = companyName;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.DateCreated = dateCreated;
+    }
+
+    public void setCoupon(Coupon coupon) {
+        this.Coupon = coupon;
+    }
+
+    public void setQuestion(Question question) {
+        this.Question = question;
+    }
+
+    public void setAnswers(List<QuestionAnswer> answers) {
+        this.Answers = answers;
+    }
+
+
+    //getters
+
+    public int getSurveyID() {
+        return this.SurveyID;
+    }
+
+    public String getTitle() {
+        return this.Title;
+    }
+
+    public String getDescription() {
+        return this.Description;
+    }
+
+    public String getCategory() {
+        return this.Category;
+    }
+
+    public String getCompanyName() {
+        return this.CompanyName;
+    }
+
+    public Date getDateCreated() {
+        return this.DateCreated;
+    }
+
+    public Coupon getCoupon() {
+        return this.Coupon;
+    }
+
+    public Question getQuestion() {
+        return this.Question;
+    }
+
+    public List<QuestionAnswer> getAnswers() {
+        return this.Answers;
+    }
 }
