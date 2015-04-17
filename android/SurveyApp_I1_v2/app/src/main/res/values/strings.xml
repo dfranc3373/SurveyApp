@@ -19,12 +19,18 @@
     <string name="toast_show_category_all">Showing all surveys</string>
     <string name="toast_show_random">Showing surveys in random order</string>
 
+    <string name="toast_answer_one">Answer one is recorded</string>
+    <string name="toast_answer_two">Answer two is recorded</string>
+    <string name="toast_answer_three">Answer three is recorded</string>
+    <string name="toast_answer_four">Answer four is recorded</string>
+
 
     <!-- spinners items values -->
     <string name="sp_date_title">Order</string>
     <string name="sp_category_title">Category</string>
     <string name="sp_date_newest_first">Newest First</string>
     <string name="sp_date_oldest_first">Oldest First</string>
+    <string name="title_activity_rate_survey">RateSurvey</string>
 
 
     <!--=======

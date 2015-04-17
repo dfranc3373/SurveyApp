@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.macbook.surveyapp_i1">
+    package="com.example.macbook.surveyapp_i1" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -10,10 +10,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".Splash"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".Menu"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MENU" />
 
@@ -31,7 +31,7 @@
         </activity>
         <activity
             android:name=".LoginWithFB"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.LOGINWITHFB" />
 
@@ -40,7 +40,7 @@
         </activity>
         <activity
             android:name=".SignUp"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.SIGNUP" />
 
@@ -49,7 +49,7 @@
         </activity>
         <activity
             android:name=".ViewProfile"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEWPROFILE" />
 
@@ -58,7 +58,7 @@
         </activity>
         <activity
             android:name=".Registering"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.REGISTERING" />
 
@@ -76,7 +76,7 @@
 
         <activity
             android:name=".SurveyList"
-            android:label="@string/title_activity_survey_list">
+            android:label="@string/title_activity_survey_list" >
             <intent-filter>
                 <action android:name="android.intent.action.SURVEYLIST" />
 
@@ -85,15 +85,17 @@
         </activity>
         <activity
             android:name=".TakeSurvey"
-            android:label="@string/title_activity_take_survey">
+            android:label="@string/title_activity_take_survey" >
+            <intent-filter>
+                <action android:name="android.intent.action.TAKESURVEY" />
 
-        <intent-filter>
-            <action android:name="android.intent.action.TAKESURVEY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RateSurvey"
+            android:label="@string/title_activity_rate_survey" >
+        </activity>
+    </application>
 
-            <category android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
-
-    </activity>
-</application>
-
-    </manifest>
+</manifest>
