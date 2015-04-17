@@ -3,6 +3,7 @@ package com.example.macbook.surveyapp_i1;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -53,6 +54,10 @@ public class Menu extends Activity implements OnClickListener{
     ProgressDialog dialog;
 
     SharedPrefsHandler sph;
+
+    private SharedPreferences preferences;
+
+    Gson gson = new Gson();
 	
 //	protected void onCreate(final Bundle savedInstanceState) {
 //=======
@@ -67,6 +72,19 @@ public class Menu extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
 
+
+        //for testing purposes simulate logged in
+        preferences = Menu.this.getSharedPreferences(Constants.PREF_NAME, 0);
+        boolean loggedIn = preferences.getBoolean(Constants.LoggedIn, false);
+        loggedIn = true;
+
+        if(loggedIn) {
+            //they are logged in
+            Intent i = new Intent(Menu.this, SurveyList.class);
+            startActivity(i);
+            finish();
+        }
+
         sph = new SharedPrefsHandler(this);
 
         btn_sign_up = (Button) findViewById(R.id.btn_sign_up);
@@ -74,6 +92,8 @@ public class Menu extends Activity implements OnClickListener{
         btn_show_surveys = (Button) findViewById(R.id.btn_survey_list);
 
         LoginButton authButton = (LoginButton) findViewById(R.id.authButton);
+
+
 
         authButton.setOnErrorListener(new LoginButton.OnErrorListener() {
 
@@ -158,6 +178,8 @@ public class Menu extends Activity implements OnClickListener{
                                 }
                             });
                 }
+
+
             }
         });
 

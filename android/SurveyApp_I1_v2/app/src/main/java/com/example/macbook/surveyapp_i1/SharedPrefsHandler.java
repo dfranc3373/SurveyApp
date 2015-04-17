@@ -13,7 +13,7 @@ public class SharedPrefsHandler {
 
     public SharedPrefsHandler(Context context) {
         sPref = context.getSharedPreferences
-                ("com.example.macbook.surveyapp_i1", context.MODE_PRIVATE);
+                (Constants.PREF_NAME, context.MODE_PRIVATE);
     }
 
     public void saveSharedPreferences(String fieldName, String fieldContent){
@@ -24,8 +24,12 @@ public class SharedPrefsHandler {
     }
 
 
-    public String readSharedPreferences(String fieldName){
-
-       return sPref.getString(fieldName, "");
+    public String readSharedPreferences(String fieldName, String defaultData){
+       return sPref.getString(fieldName, defaultData);
     }
+
+    public boolean readSharedPreferences(String fieldName, boolean defaultData){
+        return sPref.getBoolean(fieldName, defaultData);
+    }
+
 }

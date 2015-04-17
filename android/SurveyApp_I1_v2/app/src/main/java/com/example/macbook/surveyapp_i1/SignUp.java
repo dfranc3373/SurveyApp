@@ -3,6 +3,7 @@ package com.example.macbook.surveyapp_i1;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.gson.Gson;
+
 public class SignUp extends Activity implements AdapterView.OnItemSelectedListener {
 
 	Button Register;
@@ -19,6 +22,9 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
 	DataHandler handler;
     Spinner selectAge;
    // String getAge;
+   private SharedPreferences preferences;
+
+    Gson gson = new Gson();
 
     private String[] ageGroup = { "Below 14", "15-21", "22-30", "31-39","40-50","50+"};
     public String getAge = "Error Encountered!!!";
@@ -29,6 +35,8 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.signup);
+
+        preferences = SignUp.this.getSharedPreferences(Constants.PREF_NAME, 0);
 
         Register =(Button)findViewById(R.id.btn_register);
         FirstName =(EditText)findViewById(R.id.first_name);
