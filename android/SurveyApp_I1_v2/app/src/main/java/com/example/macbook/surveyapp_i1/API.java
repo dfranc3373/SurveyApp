@@ -3,9 +3,7 @@ package com.example.macbook.surveyapp_i1;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 
-import com.example.macbook.surveyapp_i1.Constants;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -22,9 +20,7 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -87,17 +83,17 @@ public class API {
 
             Models.Response authentication = gson.fromJson(response, new TypeToken<Models.Response>() {}.getType());
 
-            if(authentication.Success == true) {
+            if(authentication.getSuccess() == true) {
 
-                User member = ((User) authentication.Model);
+                User member = ((User) authentication.getModel());
 
                 SharedPreferences.Editor edit = preferences.edit();
 
                 edit.putString(Constants.LoggedIn, "true");
-                edit.putString(Constants.APP_TOKEN, member.Token);
-                edit.putString(Constants.Email, member.Email);
-                edit.putString(Constants.UserID, String.valueOf(member.UserID));
-                edit.putString(Constants.FB, String.valueOf(member.FB));
+                edit.putString(Constants.APP_TOKEN, member.getToken());
+                edit.putString(Constants.Email, member.getEmail());
+                edit.putString(Constants.UserID, String.valueOf(member.getUserID()));
+                edit.putString(Constants.FB, String.valueOf(member.isFB()));
 
                 edit.commit();
 
@@ -163,9 +159,9 @@ public class API {
 
             Models.Response authentication = gson.fromJson(response, new TypeToken<Models.Response>() {}.getType());
 
-            if(authentication.Success == true) {
+            if(authentication.getSuccess() == true) {
 
-                List<Survey> surveys = gson.fromJson(gson.toJson(authentication.Model), new TypeToken<List<Survey>>(){}.getType());
+                List<Survey> surveys = gson.fromJson(gson.toJson(authentication.getModel()), new TypeToken<List<Survey>>(){}.getType());
 
                 return surveys;
 
@@ -216,7 +212,7 @@ public class API {
 
             Models.Response authentication = gson.fromJson(response, new TypeToken<Models.Response>() {}.getType());
 
-            if(authentication.Success == true) {
+            if(authentication.getSuccess() == true) {
 
                 return true;
 

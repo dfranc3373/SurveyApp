@@ -224,7 +224,7 @@ public class Menu extends Activity implements OnClickListener{
 
                 Models.Response r = gson.fromJson(json, new TypeToken<Models.Response>() {}.getType());
 
-                if(r.Success) {
+                if(r.getSuccess()) {
 
                     Log.i("Log User in", "User data has been verified");
 
