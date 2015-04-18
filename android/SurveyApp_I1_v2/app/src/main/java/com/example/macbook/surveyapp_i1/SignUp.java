@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 public class SignUp extends Activity implements AdapterView.OnItemSelectedListener {
 
 	Button Register;
-    EditText FirstName, LastName, Age, Phone;
+    EditText FirstName, LastName, Age, Email;
 	DataHandler handler;
     Spinner selectAge;
    // String getAge;
@@ -41,7 +41,7 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
         Register =(Button)findViewById(R.id.btn_register);
         FirstName =(EditText)findViewById(R.id.first_name);
         LastName =(EditText)findViewById(R.id.last_name);
-        Phone =(EditText)findViewById(R.id.phone);
+        Email =(EditText)findViewById(R.id.phone);
 
 // Adapter for String[] makeName i.e. a Spinner(drop down box)
         ArrayAdapter<String> adapterAge = new ArrayAdapter<String>(
@@ -58,12 +58,12 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
 
                 String getFirstName = FirstName.getText().toString();
                 String getLastName = LastName.getText().toString();
-               // String getAge = Age.getText().toString();
-                String getPhone = Phone.getText().toString();
+                String getAge = Age.getText().toString();
+                String getEmail = Email.getText().toString();
 
                 DataHandler entry = new DataHandler(SignUp.this);
                 entry.open();
-                entry.createEntry(getFirstName, getLastName, getAge, getPhone, "Token");
+                entry.createEntry(getFirstName, getLastName, getAge, getEmail, "Token");
                 entry.close();
 
                 Intent intent = new Intent("android.intent.action.REGISTERING");
