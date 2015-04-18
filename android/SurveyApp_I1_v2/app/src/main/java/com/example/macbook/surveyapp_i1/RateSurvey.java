@@ -43,8 +43,6 @@ public class RateSurvey extends ActionBarActivity {
 
     }
 
-
-
     public void rateSurvey() {
 
         final ProgressDialog dialog = new ProgressDialog(RateSurvey.this);

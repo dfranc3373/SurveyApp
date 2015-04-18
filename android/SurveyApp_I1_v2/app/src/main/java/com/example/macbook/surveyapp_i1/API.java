@@ -177,6 +177,76 @@ public class API {
 
     }
 
+    public boolean CreateUser(User user) {
+
+        Gson gson = new Gson();
+
+        String url = "http://survey-app-texastech.appspot.com/register_user";
+
+        List<NameValuePair> values = new ArrayList<NameValuePair>();
+
+        values.add(new BasicNameValuePair("name", user.getName()));
+        values.add(new BasicNameValuePair("email", user.getEmail()));
+        values.add(new BasicNameValuePair("password", user.getPassword()));
+        values.add(new BasicNameValuePair("FB", (user.isFB() ? "true" : "false")));
+        values.add(new BasicNameValuePair("gender", String.valueOf(user.getGender())));
+        values.add(new BasicNameValuePair("age_range", String.valueOf(user.getAge_Range())));
+        values.add(new BasicNameValuePair("token", ""));
+
+        sendRequest r = new sendRequest(url, values);
+
+        r.execute();
+
+        String response = null;
+
+        try {
+
+            response = r.get();
+
+        } catch (InterruptedException e) {
+
+            e.printStackTrace();
+
+        } catch (ExecutionException e) {
+
+            e.printStackTrace();
+
+        }
+
+        try {
+
+            Models.Response authentication = gson.fromJson(response, new TypeToken<Models.Response>() {}.getType());
+
+            if(authentication.getSuccess() == true) {
+
+                User member = ((User) authentication.getModel());
+
+                SharedPreferences.Editor edit = preferences.edit();
+
+                edit.putString(Constants.LoggedIn, "true");
+                edit.putString(Constants.APP_TOKEN, member.getToken());
+                edit.putString(Constants.Email, member.getEmail());
+                edit.putString(Constants.UserID, String.valueOf(member.getUserID()));
+                edit.putString(Constants.FB, String.valueOf(member.isFB()));
+
+                edit.commit();
+
+                return true;
+
+            } else {
+
+                return false;
+
+            }
+
+        } catch(Exception ex) {
+
+            return false;
+
+        }
+
+    }
+
     public boolean PostAnswers(List<UserAnswer> answers) {
 
         Gson gson = new Gson();

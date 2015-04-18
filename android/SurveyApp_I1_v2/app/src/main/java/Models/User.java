@@ -6,6 +6,8 @@ package Models;
 public class User {
 
     private int UserID;
+    private String Name;
+    private String Password;
     private String Email;
     private boolean FB;
     private int Gender;
@@ -16,6 +18,14 @@ public class User {
 
     public void setUserID(int userID) {
         this.UserID = userID;
+    }
+
+    public void setName(String name) {
+        this.Name = name;
+    }
+
+    public void setPassword(String password) {
+        this.Password = password;
     }
 
     public void setEmail(String email) {
@@ -43,6 +53,14 @@ public class User {
 
     public int getUserID() {
         return this.UserID;
+    }
+
+    public String getName() {
+        return this.Name;
+    }
+
+    public String getPassword() {
+        return this.Password;
     }
 
     public String getEmail() {
