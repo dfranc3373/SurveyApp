@@ -1,5 +1,7 @@
 package com.example.macbook.surveyapp_i1;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,6 +22,41 @@ public class RateSurvey extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_rate_survey, menu);
         return true;
+    }
+
+    public void rateSurvey() {
+
+        final ProgressDialog dialog = new ProgressDialog(RateSurvey.this);
+
+        dialog.setTitle("Sending Rating");
+        dialog.setMessage("Please wait");
+
+        dialog.show();
+
+        Thread sendFeedback = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                API api = new API(RateSurvey.this);
+                api.SurveyFeedback(1, 5);//put the rankings here
+
+                RateSurvey.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.hide();
+                        Intent backtothemainlist = new Intent(RateSurvey.this, SurveyList.class);
+                        RateSurvey.this.startActivity(backtothemainlist);
+                        finish();
+
+
+                    }
+                });
+
+            }
+        });
+
+        sendFeedback.start();
+
     }
 
     @Override

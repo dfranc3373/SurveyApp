@@ -230,6 +230,115 @@ public class API {
 
     }
 
+    public boolean SurveyFeedback(int SurveyID, int rating) {
+
+        Gson gson = new Gson();
+
+        String url = "http://survey-app-texastech.appspot.com/SurveyFeedback";
+
+        List<NameValuePair> values = new ArrayList<NameValuePair>();
+
+        values.add(new BasicNameValuePair("SurveyID", String.valueOf(SurveyID)));
+        values.add(new BasicNameValuePair("rating", String.valueOf(rating)));
+
+        sendRequest r = new sendRequest(url, values);
+
+        r.execute();
+
+        String response = null;
+
+        try {
+
+            response = r.get();
+
+        } catch (InterruptedException e) {
+
+            e.printStackTrace();
+
+        } catch (ExecutionException e) {
+
+            e.printStackTrace();
+
+        }
+
+        try {
+
+            Models.Response authentication = gson.fromJson(response, new TypeToken<Models.Response>() {}.getType());
+
+            if(authentication.getSuccess() == true) {
+
+
+                return true;
+
+            } else {
+
+                return false;
+
+            }
+
+        } catch(Exception ex) {
+
+            return false;
+
+        }
+
+    }
+
+    public String GetSurveyCode(int SurveyID) {
+
+        Gson gson = new Gson();
+
+        String url = "http://survey-app-texastech.appspot.com/GetSurveyCode";
+
+        List<NameValuePair> values = new ArrayList<NameValuePair>();
+
+        values.add(new BasicNameValuePair("SurveyID", String.valueOf(SurveyID)));
+
+        sendRequest r = new sendRequest(url, values);
+
+        r.execute();
+
+        String response = null;
+
+        try {
+
+            response = r.get();
+
+        } catch (InterruptedException e) {
+
+            e.printStackTrace();
+
+        } catch (ExecutionException e) {
+
+            e.printStackTrace();
+
+        }
+
+        try {
+
+            Models.Response authentication = gson.fromJson(response, new TypeToken<Models.Response>() {}.getType());
+
+            if(authentication.getSuccess() == true) {
+
+
+                String code = ((String) authentication.getModel());
+
+                return code;
+
+            } else {
+
+                return "";
+
+            }
+
+        } catch(Exception ex) {
+
+            return "";
+
+        }
+
+    }
+
     private class sendRequest extends AsyncTask<Void, String, String> {
 
         private String URL;
@@ -245,7 +354,6 @@ public class API {
             this.Values = values;
 
         }
-
         @Override
         protected String doInBackground(Void... params) {
 
