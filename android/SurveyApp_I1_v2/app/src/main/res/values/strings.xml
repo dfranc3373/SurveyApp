@@ -32,6 +32,9 @@
     <string name="sp_date_oldest_first">Oldest First</string>
     <string name="title_activity_rate_survey">RateSurvey</string>
 
+    <!-- RateSurvey activity -->
+    <string name="please_rate_survey">Please rate the survey</string>
+
 
     <!--=======
         <string name="app_id">886422028045742</string>
