@@ -76,11 +76,11 @@ public class Menu extends Activity implements OnClickListener{
         //for testing purposes simulate logged in
         preferences = Menu.this.getSharedPreferences(Constants.PREF_NAME, 0);
         boolean loggedIn = preferences.getBoolean(Constants.LoggedIn, false);
-        loggedIn = true;
+        loggedIn = false;
 
         if(loggedIn) {
             //they are logged in
-            Intent i = new Intent(Menu.this, SurveyList.class);
+            Intent i = new Intent(Menu.this, RateSurvey.class);
             startActivity(i);
             finish();
         }
