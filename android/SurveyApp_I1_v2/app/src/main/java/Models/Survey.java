@@ -15,8 +15,7 @@ public class Survey {
     private String CompanyName;
     private Date DateCreated;
     private Coupon Coupon;
-    private Question Question;
-    private List<QuestionAnswer> Answers;
+    private List<Question> Question;
 
     //setters
 
@@ -48,12 +47,8 @@ public class Survey {
         this.Coupon = coupon;
     }
 
-    public void setQuestion(Question question) {
+    public void setQuestion(List<Question> question) {
         this.Question = question;
-    }
-
-    public void setAnswers(List<QuestionAnswer> answers) {
-        this.Answers = answers;
     }
 
 
@@ -87,11 +82,8 @@ public class Survey {
         return this.Coupon;
     }
 
-    public Question getQuestion() {
+    public List<Question> getQuestion() {
         return this.Question;
     }
 
-    public List<QuestionAnswer> getAnswers() {
-        return this.Answers;
-    }
 }
