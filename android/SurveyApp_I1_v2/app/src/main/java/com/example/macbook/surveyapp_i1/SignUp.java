@@ -11,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 
 import com.google.gson.Gson;
@@ -23,15 +22,14 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
 	Button Register;
     EditText Name, Password, Email, Age;
     Spinner Gender;
-	DataHandler handler;
-  //  Spinner selectAge;
-   // String getAge;
+    String getGender;
+
    private SharedPreferences preferences;
 
     Gson gson = new Gson();
 
     private String[] selectGender = { "Male", "Female"};
-    public String getAge = "Error Encountered!!!";
+  //  public String getAge = "Error Encountered!!!";
 
     
 	@Override
@@ -43,15 +41,16 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
         preferences = SignUp.this.getSharedPreferences(Constants.PREF_NAME, 0);
 
         Register =(Button)findViewById(R.id.btn_register);
-        Name =(EditText)findViewById(R.id.first_name);
-        Email =(EditText)findViewById(R.id.phone);
+        Name =(EditText)findViewById(R.id.name);
+        Email =(EditText)findViewById(R.id.email);
+        Age =(EditText)findViewById(R.id.age);
         Password =(EditText)findViewById(R.id.password);
         Gender =(Spinner)findViewById(R.id.select_gender);
 
 // Adapter for String[] Gender i.e. a Spinner(drop down box)
         ArrayAdapter<String> adapterAge = new ArrayAdapter<String>(
                 SignUp.this, android.R.layout.simple_spinner_dropdown_item, selectGender);
-        Gender = (Spinner) findViewById(R.id.spinner_age);
+       // Gender = (Spinner) findViewById(R.id.spinner_age);
         Gender.setAdapter(adapterAge);
         Gender.setOnItemSelectedListener(this);
 
@@ -68,15 +67,12 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
                 String getGender = Gender.getSelectedItem().toString();
 
                 API entry = new API(SignUp.this);
-
                 User u = new User();
-
                 u.setName(getName);
                 u.setEmail(getEmail);
                 u.setPassword(getPassword);
                 u.setAge_Range(getAge);
                 u.setGender(getGender);
-
                 entry.CreateUser(u);
 
                 Intent intent = new Intent("android.intent.action.REGISTERING");
@@ -88,8 +84,8 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        int posMake = selectAge.getSelectedItemPosition();
-        getAge = ageGroup[posMake];
+        int posMake = Gender.getSelectedItemPosition();
+        getGender = selectGender[posMake];
        // getAge = (String) selectAge.getSelectedItem();
     }
 

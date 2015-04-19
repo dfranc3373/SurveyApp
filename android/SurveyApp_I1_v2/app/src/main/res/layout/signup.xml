@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#CEF6F5">
+    android:background="#CEF6F5"
+    android:id="@+id/signup1">
 
 
     <TextView
@@ -65,11 +66,6 @@
         android:layout_marginTop="20dp"
         android:id="@+id/tv_age"
         android:textSize="25dp" />
-
-    <WebView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/webView" />
 
     <EditText
         android:layout_width="match_parent"
