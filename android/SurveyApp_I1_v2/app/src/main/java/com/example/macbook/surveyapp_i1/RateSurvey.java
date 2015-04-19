@@ -2,6 +2,7 @@ package com.example.macbook.surveyapp_i1;
 
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -11,9 +12,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class RateSurvey extends ActionBarActivity {
+
+    Context context = this;
 
     Button btnSubmitRating;
 
@@ -89,7 +93,8 @@ public class RateSurvey extends ActionBarActivity {
             public void onClick(View v) {
 
                 //set rating to ignore
-                rateSurvey(surveyID, 0);
+                //rating = 0;
+                //rateSurvey(surveyID, rating);
 
                 //go to survey list
                 Intent backtothemainlist = new Intent(RateSurvey.this, SurveyList.class);
@@ -116,36 +121,44 @@ public class RateSurvey extends ActionBarActivity {
 
     public void rateSurvey(final int surveyID, final int rating) {
 
-        final ProgressDialog dialog = new ProgressDialog(RateSurvey.this);
+        if(rating < 1){
 
-        dialog.setTitle("Sending Rating");
-        dialog.setMessage("Please wait");
+            Toast.makeText(context, R.string.choose_rating, Toast.LENGTH_LONG).show();
 
-        dialog.show();
+        }else {
 
-        Thread sendFeedback = new Thread(new Runnable() {
-            @Override
-            public void run() {
+            final ProgressDialog dialog = new ProgressDialog(RateSurvey.this);
 
-                API api = new API(RateSurvey.this);
-                api.SurveyFeedback(surveyID, rating);//put the rankings here
+            dialog.setTitle("Sending Rating");
+            dialog.setMessage("Please wait");
 
-                RateSurvey.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog.hide();
-                        Intent backtothemainlist = new Intent(RateSurvey.this, SurveyList.class);
-                        RateSurvey.this.startActivity(backtothemainlist);
-                        finish();
+            dialog.show();
+
+            Thread sendFeedback = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    API api = new API(RateSurvey.this);
+                    api.SurveyFeedback(surveyID, rating);//put the rankings here
+
+                    RateSurvey.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dialog.hide();
+                            Intent backtothemainlist = new Intent(RateSurvey.this, SurveyList.class);
+                            RateSurvey.this.startActivity(backtothemainlist);
+                            finish();
 
 
-                    }
-                });
+                        }
+                    });
 
-            }
-        });
+                }
+            });
 
-        sendFeedback.start();
+            sendFeedback.start();
+
+        }
 
     }
 
