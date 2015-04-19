@@ -35,6 +35,7 @@
     <!-- RateSurvey activity -->
     <string name="please_rate_survey">Please rate the survey</string>
     <string name="choose_rating">Please tap a star to choose rating</string>
+    <string name="title_activity_coupons">Coupons</string>
 
     <!--=======
         <string name="app_id">886422028045742</string>
