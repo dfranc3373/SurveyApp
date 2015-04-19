@@ -3,47 +3,118 @@ package com.example.macbook.surveyapp_i1;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
-
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 
 public class RateSurvey extends ActionBarActivity {
 
-    ImageButton btnRateOne;
-    ImageButton btnRateTwo;
-    ImageButton btnRateThree;
-    ImageButton btnRateFour;
-    ImageButton btnSubmitRating;
+    Button btnSubmitRating;
+
+    ImageButton stars[] = new ImageButton[4];
 
     TextView tvSkipRating;
 
+    int rating = 0;
+    int surveyID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rate_survey);
 
-        btnRateOne = (ImageButton) findViewById(R.id.btnStarOne);
-        btnRateTwo = (ImageButton) findViewById(R.id.btnStarTwo);
-        btnRateThree = (ImageButton) findViewById(R.id.btnStarThree);
-        btnRateFour = (ImageButton) findViewById(R.id.btnStarFour);
-        btnSubmitRating = (ImageButton) findViewById(R.id.btnSubmitRating);
+        stars[0] = (ImageButton) findViewById(R.id.btnStarOne);
+        stars[1] = (ImageButton) findViewById(R.id.btnStarTwo);
+        stars[2] = (ImageButton) findViewById(R.id.btnStarThree);
+        stars[3] = (ImageButton) findViewById(R.id.btnStarFour);
+        btnSubmitRating = (Button) findViewById(R.id.btnSubmitRating);
 
         tvSkipRating = (TextView) findViewById(R.id.tvSkipRating);
 
-        btnRateOne.setImageResource(R.drawable.grey_star);
-        btnRateTwo.setImageResource(R.drawable.grey_star);
-        btnRateThree.setImageResource(R.drawable.grey_star);
-        btnRateFour.setImageResource(R.drawable.grey_star);
+        colorRatingStars(0);
+
+        stars[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                rating = 1;
+                colorRatingStars(1);
+            }
+        });
+
+        stars[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                rating = 2;
+                colorRatingStars(2);
+            }
+        });
+
+        stars[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                rating = 3;
+                colorRatingStars(3);
+            }
+        });
+
+        stars[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                rating = 4;
+                colorRatingStars(4);
+            }
+        });
+
+        btnSubmitRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                rateSurvey(surveyID, rating);
+
+            }
+        });
+
+        tvSkipRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //set rating to ignore
+                rateSurvey(surveyID, 0);
+
+                //go to survey list
+                Intent backtothemainlist = new Intent(RateSurvey.this, SurveyList.class);
+                RateSurvey.this.startActivity(backtothemainlist);
+                finish();
+            }
+        });
 
     }
 
-    public void rateSurvey() {
+    private void colorRatingStars(int starClicked){
+
+        Log.d("myLog", "Length of Stars " + stars.length);
+
+        for (int i = 0; i < stars.length; i++){
+            if(i<starClicked) {
+                stars[i].setImageResource(R.drawable.yellow_star);
+            }
+            else{
+                stars[i].setImageResource(R.drawable.grey_star);
+            }
+        }
+    }
+
+    public void rateSurvey(final int surveyID, final int rating) {
 
         final ProgressDialog dialog = new ProgressDialog(RateSurvey.this);
 
@@ -57,7 +128,7 @@ public class RateSurvey extends ActionBarActivity {
             public void run() {
 
                 API api = new API(RateSurvey.this);
-                api.SurveyFeedback(1, 5);//put the rankings here
+                api.SurveyFeedback(surveyID, rating);//put the rankings here
 
                 RateSurvey.this.runOnUiThread(new Runnable() {
                     @Override
@@ -91,9 +162,6 @@ public class RateSurvey extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-
     }
-
-
 
 }

@@ -48,6 +48,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:background="@null"
             />
 
         <ImageButton
@@ -56,6 +57,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:background="@null"
             />
 
         <ImageButton
@@ -64,6 +66,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:background="@null"
             />
 
         <ImageButton
@@ -72,6 +75,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:background="@null"
            />
 
         </LinearLayout>
