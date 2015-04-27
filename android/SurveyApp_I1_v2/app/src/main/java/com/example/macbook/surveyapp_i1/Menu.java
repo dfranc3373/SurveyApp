@@ -80,7 +80,7 @@ public class Menu extends Activity implements OnClickListener{
 
         if(loggedIn) {
             //they are logged in
-            Intent i = new Intent(Menu.this, RateSurvey.class);
+            Intent i = new Intent(Menu.this, SurveyList.class);
             startActivity(i);
             finish();
         }

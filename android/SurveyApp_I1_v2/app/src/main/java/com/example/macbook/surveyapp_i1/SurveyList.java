@@ -19,10 +19,16 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import Models.Survey;
 
 
 public class SurveyList extends ActionBarActivity {
+
+    List surveys;
+
 
     Spinner spDate;
     Spinner spCategory;
@@ -79,19 +85,32 @@ public class SurveyList extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.survey_list);
 
+
+        API entry = new API(SurveyList.this);
+
+        //cannot get any surveys with api getSurveys - log printing 0 surveys
+        surveys = entry.getSurveys(1);
+
+        Log.d("myLog", "Number of surveys: " +  surveys.size() );
+
         setSpinners();
 
         //maps for the list
         ArrayList<Map<String, Object>> data =
-                new ArrayList<Map<String, Object>>(surveyTitle.length);
+                new ArrayList<Map<String, Object>>(surveys.size());
         Map<String, Object> m;
 
         //add data to the maps
-        for (int i=0; i<surveyTitle.length; i++){
+        for (int i=0; i<surveys.size(); i++){
+
+            Survey currentSurvey = (Survey)surveys.get(i);
+
+            Log.d("myLog",currentSurvey.getTitle() );
+
             m = new HashMap<String, Object>();
-            m.put(ATTR_NAME_TITLE, surveyTitle[i]);
-            m.put(ATTR_NAME_CATEGORY, surveyCategory[i]);
-            m.put(ATTR_NAME_DESCRIPTION, surveyDescription[i]);
+            m.put(ATTR_NAME_TITLE, currentSurvey.getTitle());
+            m.put(ATTR_NAME_CATEGORY, currentSurvey.getCategory());
+            m.put(ATTR_NAME_DESCRIPTION, currentSurvey.getDescription());
             m.put(ATTR_NAME_IMG, img);
 
             data.add(m);
