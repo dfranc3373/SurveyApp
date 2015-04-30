@@ -101,6 +101,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CouponCode"
+            android:label="@string/title_activity_take_survey" >
+            <intent-filter>
+                <action android:name="android.intent.action.COUPONCODE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".RateSurvey"
