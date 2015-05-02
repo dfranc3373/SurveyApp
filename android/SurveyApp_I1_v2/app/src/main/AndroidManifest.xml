@@ -48,6 +48,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".Coupons"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.COUPONS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ViewProfile"
             android:label="@string/app_name" >
             <intent-filter>
@@ -92,6 +101,16 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CouponCode"
+            android:label="@string/title_activity_take_survey" >
+            <intent-filter>
+                <action android:name="android.intent.action.COUPONCODE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".RateSurvey"
             android:label="@string/title_activity_rate_survey" >

@@ -91,12 +91,7 @@ public class RateSurvey extends ActionBarActivity {
         tvSkipRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //set rating to ignore
-                //rating = 0;
-                //rateSurvey(surveyID, rating);
-
-                //go to survey list
+                //ignore rating and go to survey list
                 Intent backtothemainlist = new Intent(RateSurvey.this, SurveyList.class);
                 RateSurvey.this.startActivity(backtothemainlist);
                 finish();
@@ -134,6 +129,8 @@ public class RateSurvey extends ActionBarActivity {
 
             dialog.show();
 
+
+
             Thread sendFeedback = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -148,18 +145,12 @@ public class RateSurvey extends ActionBarActivity {
                             Intent backtothemainlist = new Intent(RateSurvey.this, SurveyList.class);
                             RateSurvey.this.startActivity(backtothemainlist);
                             finish();
-
-
                         }
                     });
-
                 }
             });
-
             sendFeedback.start();
-
         }
-
     }
 
     @Override

@@ -15,19 +15,21 @@ import android.widget.Spinner;
 
 import com.google.gson.Gson;
 
+import Models.User;
+
 public class SignUp extends Activity implements AdapterView.OnItemSelectedListener {
 
 	Button Register;
-    EditText FirstName, LastName, Age, Email;
-	DataHandler handler;
-    Spinner selectAge;
-   // String getAge;
+    EditText Name, Password, Email, Age;
+    Spinner Gender;
+    String getGender;
+
    private SharedPreferences preferences;
 
     Gson gson = new Gson();
 
-    private String[] ageGroup = { "Below 14", "15-21", "22-30", "31-39","40-50","50+"};
-    public String getAge = "Error Encountered!!!";
+    private String[] selectGender = { "Male", "Female"};
+  //  public String getAge = "Error Encountered!!!";
 
     
 	@Override
@@ -39,32 +41,39 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
         preferences = SignUp.this.getSharedPreferences(Constants.PREF_NAME, 0);
 
         Register =(Button)findViewById(R.id.btn_register);
-        FirstName =(EditText)findViewById(R.id.first_name);
-        LastName =(EditText)findViewById(R.id.last_name);
-        Email =(EditText)findViewById(R.id.phone);
+        Name =(EditText)findViewById(R.id.name);
+        Email =(EditText)findViewById(R.id.email);
+        Age =(EditText)findViewById(R.id.age);
+        Password =(EditText)findViewById(R.id.password);
+        Gender =(Spinner)findViewById(R.id.select_gender);
 
-// Adapter for String[] makeName i.e. a Spinner(drop down box)
+// Adapter for String[] Gender i.e. a Spinner(drop down box)
         ArrayAdapter<String> adapterAge = new ArrayAdapter<String>(
-                SignUp.this, android.R.layout.simple_spinner_dropdown_item, ageGroup);
+                SignUp.this, android.R.layout.simple_spinner_dropdown_item, selectGender);
+       // Gender = (Spinner) findViewById(R.id.spinner_age);
+        Gender.setAdapter(adapterAge);
+        Gender.setOnItemSelectedListener(this);
 
-        selectAge = (Spinner) findViewById(R.id.spinner_age);
-        selectAge.setAdapter(adapterAge);
-        selectAge.setOnItemSelectedListener(this);
 
         Register.setOnClickListener(new OnClickListener(){
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
 
-                String getFirstName = FirstName.getText().toString();
-                String getLastName = LastName.getText().toString();
-                String getAge = Age.getText().toString();
+                String getName = Name.getText().toString();
                 String getEmail = Email.getText().toString();
+                String getPassword = Password.getText().toString();
+                String getAge = Age.getText().toString();
+                String getGender = Gender.getSelectedItem().toString();
 
-                DataHandler entry = new DataHandler(SignUp.this);
-                entry.open();
-                entry.createEntry(getFirstName, getLastName, getAge, getEmail, "Token");
-                entry.close();
+                API entry = new API(SignUp.this);
+                User u = new User();
+                u.setName(getName);
+                u.setEmail(getEmail);
+                u.setPassword(getPassword);
+                u.setAge_Range(getAge);
+                u.setGender(getGender);
+                entry.CreateUser(u);
 
                 Intent intent = new Intent("android.intent.action.REGISTERING");
                 startActivity(intent);
@@ -75,8 +84,8 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        int posMake = selectAge.getSelectedItemPosition();
-        getAge = ageGroup[posMake];
+        int posMake = Gender.getSelectedItemPosition();
+        getGender = selectGender[posMake];
        // getAge = (String) selectAge.getSelectedItem();
     }
 

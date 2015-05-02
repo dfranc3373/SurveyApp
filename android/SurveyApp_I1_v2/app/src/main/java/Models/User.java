@@ -10,8 +10,8 @@ public class User {
     private String Password;
     private String Email;
     private boolean FB;
-    private int Gender;
-    private int Age_Range;
+    private String Gender;
+    private String Age_Range;
     private String Token;
 
     //setters
@@ -36,11 +36,11 @@ public class User {
         this.FB = FB;
     }
 
-    public void setGender(int gender) {
+    public void setGender(String gender) {
         this.Gender = gender;
     }
 
-    public void setAge_Range(int age_Range) {
+    public void setAge_Range(String age_Range) {
         this.Age_Range = age_Range;
     }
 
@@ -71,11 +71,11 @@ public class User {
         return this.FB;
     }
 
-    public int getGender() {
+    public String getGender() {
         return this.Gender;
     }
 
-    public int getAge_Range() {
+    public String getAge_Range() {
         return this.Age_Range;
     }
 

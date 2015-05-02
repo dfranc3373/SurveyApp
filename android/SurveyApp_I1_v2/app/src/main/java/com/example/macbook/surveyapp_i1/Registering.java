@@ -30,7 +30,7 @@ public class Registering extends Activity {
 
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(Registering.this, ViewProfile.class);
+                Intent i = new Intent(Registering.this, SurveyList.class);
                 startActivity(i);
  
                 // close this activity
