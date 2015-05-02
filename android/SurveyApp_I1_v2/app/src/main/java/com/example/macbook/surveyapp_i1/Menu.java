@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import Models.Survey;
+
 public class Menu extends Activity implements OnClickListener{
 
 	Button btn_sign_up;
@@ -79,10 +81,26 @@ public class Menu extends Activity implements OnClickListener{
         loggedIn = true;
 
         if(loggedIn) {
+
+            Thread api = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    API api = new API(Menu.this);
+                    List<Survey> surveys = api.getSurveys();
+                    if(surveys.size() == 1) {
+
+                        String info = "";
+
+                    }
+                }
+            });
+
+            api.start();
+
             //they are logged in
-            Intent i = new Intent(Menu.this, RateSurvey.class);
-            startActivity(i);
-            finish();
+            //Intent i = new Intent(Menu.this, RateSurvey.class);
+            //startActivity(i);
+            //finish();
         }
 
         sph = new SharedPrefsHandler(this);
