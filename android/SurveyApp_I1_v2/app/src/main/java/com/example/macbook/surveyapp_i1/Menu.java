@@ -46,6 +46,11 @@ import Models.Survey;
 
 public class Menu extends Activity implements OnClickListener{
 
+    String get_age="unknown";
+    String get_name="unknown";
+    String get_gender="unknown";
+    String get_email="unknown";
+
 	Button btn_sign_up;
 	Button btn_view_profile;
     Button btn_show_surveys;
@@ -66,12 +71,7 @@ protected void onCreate(final Bundle savedInstanceState) {
 		// TODO Auto-generated method stub	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
-        
-        String get_age="unknown";
-        String get_name="unknown";
-        String get_gender="unknown";
-        String get_email="unknown";
-        
+
         //for testing purposes simulate logged in
         preferences = Menu.this.getSharedPreferences(Constants.PREF_NAME, 0);
         boolean loggedIn = preferences.getBoolean(Constants.LoggedIn, false);
