@@ -5,16 +5,32 @@
     android:background="#CEF6F5">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/title_neglet"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Select a coupon you want to use:"
+        android:text="Your Coupons"
         android:textSize="30dp"
-        android:id="@+id/text_select_coupon" />
-    <TextView
-        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_marginLeft="10px">
+    </TextView>
+    <LinearLayout
+        android:id="@+id/llUpdateTime"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="10dp"
-        android:id="@+id/text_neglect" />
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llList1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+        <ListView
+            android:id="@+id/lv_coupons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </ListView>
+    </LinearLayout>
 
 </LinearLayout>

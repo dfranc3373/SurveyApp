@@ -42,13 +42,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import Models.Survey;
+
 public class Menu extends Activity implements OnClickListener{
+
+    String get_age="unknown";
+    String get_name="unknown";
+    String get_gender="unknown";
+    String get_email="unknown";
 
 	Button btn_sign_up;
 	Button btn_view_profile;
     Button btn_show_surveys;
     private String TAG = "LoginWithFB";
-//<<<<<<< Updated upstream
+
     String get_id;
 
     ProgressDialog dialog;
@@ -59,19 +66,11 @@ public class Menu extends Activity implements OnClickListener{
 
     Gson gson = new Gson();
 	
-//	protected void onCreate(final Bundle savedInstanceState) {
-//=======
-    String get_age="unknown";
-    String get_name="unknown";
-    String get_gender="unknown";
-    String get_email="unknown";
-
-	protected void onCreate(Bundle savedInstanceState) {
-//>>>>>>> Stashed changes
+protected void onCreate(final Bundle savedInstanceState) {
+    
 		// TODO Auto-generated method stub	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
-
 
         //for testing purposes simulate logged in
         preferences = Menu.this.getSharedPreferences(Constants.PREF_NAME, 0);
@@ -79,10 +78,32 @@ public class Menu extends Activity implements OnClickListener{
         //loggedIn = true;
 
         if(loggedIn) {
+
+            Thread api = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    API api = new API(Menu.this);
+                    List<Survey> surveys = api.getSurveys();
+                    if(surveys.size() == 1) {
+
+                        String info = "";
+
+                    }
+                }
+            });
+
+            api.start();
+
             //they are logged in
+
+            //Intent i = new Intent(Menu.this, RateSurvey.class);
+            //startActivity(i);
+            //finish();
+
             Intent i = new Intent(Menu.this, SurveyList.class);
             startActivity(i);
             finish();
+
         }
 
         sph = new SharedPrefsHandler(this);

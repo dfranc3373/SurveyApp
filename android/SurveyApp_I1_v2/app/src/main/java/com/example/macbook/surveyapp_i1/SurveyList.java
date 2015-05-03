@@ -211,7 +211,8 @@ public class SurveyList extends ActionBarActivity {
 
             case R.id.menu_coupons:
                 //show coupons list activity
-
+                Intent intentC = new Intent("android.intent.action.COUPONS");
+                startActivity(intentC);
                 break;
 
             case R.id.menu_profile:
