@@ -6,6 +6,7 @@ package Models;
 public class QuestionAnswer {
 
     private int QuestionAnswerID;
+    private int Question;
     private String Answer;
 
     //setters
@@ -18,6 +19,10 @@ public class QuestionAnswer {
         this.Answer = answer;
     }
 
+    public void setQuestion(int q) {
+        this.Question = q;
+    }
+
     //getters
 
     public int getQuestionAnswerID() {
@@ -27,4 +32,9 @@ public class QuestionAnswer {
     public String getAnswer() {
         return this.Answer;
     }
+
+    public int getQuestion(int q) {
+        return this.Question;
+    }
+
 }

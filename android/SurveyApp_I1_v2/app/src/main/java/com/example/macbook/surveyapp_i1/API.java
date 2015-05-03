@@ -89,11 +89,11 @@ public class API {
 
                 SharedPreferences.Editor edit = preferences.edit();
 
-                edit.putString(Constants.LoggedIn, "true");
+                edit.putBoolean(Constants.LoggedIn, true);
                 edit.putString(Constants.APP_TOKEN, member.getToken());
                 edit.putString(Constants.Email, member.getEmail());
-                edit.putString(Constants.UserID, String.valueOf(member.getUserID()));
-                edit.putString(Constants.FB, String.valueOf(member.isFB()));
+                edit.putInt(Constants.UserID, member.getUserID());
+                edit.putBoolean(Constants.FB, member.isFB());
 
                 edit.commit();
 
@@ -223,11 +223,11 @@ public class API {
 
                 SharedPreferences.Editor edit = preferences.edit();
 
-                edit.putString(Constants.LoggedIn, "true");
+                edit.putBoolean(Constants.LoggedIn, true);
                 edit.putString(Constants.APP_TOKEN, member.getToken());
                 edit.putString(Constants.Email, member.getEmail());
-                edit.putString(Constants.UserID, String.valueOf(member.getUserID()));
-                edit.putString(Constants.FB, String.valueOf(member.isFB()));
+                edit.putInt(Constants.UserID, member.getUserID());
+                edit.putBoolean(Constants.FB, member.isFB());
 
                 edit.commit();
 

@@ -9,11 +9,16 @@ public class Question {
 
     private int QuestionID;
     private int SurveyID;
-    private String Title;
+
+    private String Survey;
     private String Description;
     private List<QuestionAnswer> Answers;
 
     //setters
+
+    public void setSurvey(String survey) {
+        Survey = survey;
+    }
 
     public void setQuestionID(int questionID) {
         this.QuestionID = questionID;
@@ -24,7 +29,7 @@ public class Question {
     }
 
     public void setTitle(String title) {
-        this.Title = title;
+        this.Survey = title;
     }
 
     public void setDescription(String description) {
@@ -46,7 +51,7 @@ public class Question {
     }
 
     public String getTitle() {
-        return this.Title;
+        return this.Survey;
     }
 
     public String getDescription() {
@@ -55,5 +60,9 @@ public class Question {
 
     public List<QuestionAnswer> getAnswers() {
         return this.Answers;
+    }
+
+    public String getSurvey() {
+        return Survey;
     }
 }

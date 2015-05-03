@@ -2,6 +2,7 @@ package com.example.macbook.surveyapp_i1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -17,6 +18,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,8 +31,9 @@ import Models.Survey;
 
 public class SurveyList extends ActionBarActivity {
 
-    List surveys;
+    SharedPreferences prefs;
 
+    List surveys;
 
     Spinner spDate;
     Spinner spCategory;
@@ -43,6 +48,7 @@ public class SurveyList extends ActionBarActivity {
     final String ATTR_NAME_DESCRIPTION = "description";
     final String ATTR_NAME_CATEGORY = "category";
     final String ATTR_NAME_IMG = "image";
+    final String ATTR_NAME_SID = "surveryID";
 
     ListView lvSurveyList;
 
@@ -85,11 +91,32 @@ public class SurveyList extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.survey_list);
 
+        prefs = context.getSharedPreferences(Constants.PREF_NAME, 0);
+
 
         API entry = new API(SurveyList.this);
 
         //cannot get any surveys with api getSurveys - log printing 0 surveys
-        surveys = entry.getSurveys(1);
+
+
+        if(prefs.getString(Constants.Surveys, "").equals("")) {//no surveys exist
+
+
+            surveys = entry.getSurveys(0);
+
+            SharedPreferences.Editor info = prefs.edit();
+
+            info.putString(Constants.Surveys, (new Gson()).toJson(surveys));
+
+            info.commit();
+
+        } else {
+
+            surveys = (new Gson()).fromJson(prefs.getString(Constants.Surveys, ""), new TypeToken<List<Survey>>(){}.getType());
+
+        }
+
+
 
         Log.d("myLog", "Number of surveys: " +  surveys.size() );
 
@@ -111,16 +138,17 @@ public class SurveyList extends ActionBarActivity {
             m.put(ATTR_NAME_TITLE, currentSurvey.getTitle());
             m.put(ATTR_NAME_CATEGORY, currentSurvey.getCategory());
             m.put(ATTR_NAME_DESCRIPTION, currentSurvey.getDescription());
-            m.put(ATTR_NAME_IMG, img);
+            m.put(ATTR_NAME_SID, currentSurvey.getSurveyID());
+            //m.put(ATTR_NAME_IMG, img);
 
             data.add(m);
         }
 
         //source and destination for the adapter
         String[] from = {ATTR_NAME_TITLE, ATTR_NAME_CATEGORY,
-                ATTR_NAME_DESCRIPTION, ATTR_NAME_IMG};
+                ATTR_NAME_DESCRIPTION, ATTR_NAME_SID};
         int[]to = {R.id.tvSurveyTitle, R.id.tvSurveyCategory,
-                R.id.tvSurveyDescription, R.id.ivSurveyRating};
+                R.id.tvSurveyDescription, R.id.tvSurveyID};
 
         //create adapter and give it to the survey list
         SimpleAdapter simpleAdapter =
@@ -133,10 +161,17 @@ public class SurveyList extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                TextView tvSurveyID = (TextView) view.findViewById(R.id.tvSurveyID);
+
+                String SurveyIDString = tvSurveyID.getText().toString();
+
+                int SurveyID = Integer.parseInt(SurveyIDString);
+
                 //call single survey activity and pass the survey id
-                Log.d("myLog", "item clicked " + position);
+                Log.d("myLog", "item clicked " + position + " " + SurveyID);
 
                 Intent intent = new Intent("android.intent.action.TAKESURVEY");
+                intent.putExtra("SurveyID", SurveyID);
                 startActivity(intent);
             }
         });
