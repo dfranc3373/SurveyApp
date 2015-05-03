@@ -28,7 +28,7 @@ public class Coupons extends Activity {
 
 
     //Test surveys data
-    String[] surveyTitle = { "Coupon One", "Coupon Two", "Coupon Three",
+    String[] couponsTitle = { "Coupon One", "Coupon Two", "Coupon Three",
             "Coupon Four", "Coupon Five", };
 
     int img = R.drawable.ic_launcher;
@@ -44,13 +44,13 @@ public class Coupons extends Activity {
         Coupons = (ListView) findViewById(R.id.lv_coupons);
 //maps for the list
         ArrayList<Map<String, Object>> data =
-                new ArrayList<Map<String, Object>>(surveyTitle.length);
+                new ArrayList<Map<String, Object>>(couponsTitle.length);
         Map<String, Object> m;
 
         //add data to the maps
-        for (int i = 0; i < surveyTitle.length; i++) {
+        for (int i = 0; i < couponsTitle.length; i++) {
             m = new HashMap<String, Object>();
-            m.put(ATTR_NAME_TITLE, surveyTitle[i]);
+            m.put(ATTR_NAME_TITLE, couponsTitle[i]);
             m.put(ATTR_NAME_IMG, img);
 
             data.add(m);
