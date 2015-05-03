@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -73,10 +74,17 @@ public class SignUp extends Activity implements AdapterView.OnItemSelectedListen
                 u.setPassword(getPassword);
                 u.setAge_Range(getAge);
                 u.setGender(getGender);
-                entry.CreateUser(u);
+                if(entry.CreateUser(u)) {//worked
 
-                Intent intent = new Intent("android.intent.action.REGISTERING");
-                startActivity(intent);
+                    Intent intent = new Intent("android.intent.action.REGISTERING");
+                    startActivity(intent);
+
+                } else {
+
+                    Toast.makeText(SignUp.this, "Error please try and register again", Toast.LENGTH_LONG);
+
+                }
+
             }
         });
 	}

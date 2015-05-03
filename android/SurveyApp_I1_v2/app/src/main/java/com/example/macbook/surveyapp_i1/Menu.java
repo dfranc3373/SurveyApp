@@ -110,7 +110,7 @@ protected void onCreate(final Bundle savedInstanceState) {
 
         btn_sign_up = (Button) findViewById(R.id.btn_sign_up);
         btn_view_profile = (Button) findViewById(R.id.btn_login);
-        btn_show_surveys = (Button) findViewById(R.id.btn_survey_list);
+        //btn_show_surveys = (Button) findViewById(R.id.btn_survey_list);
 
         LoginButton authButton = (LoginButton) findViewById(R.id.authButton);
 
@@ -224,7 +224,7 @@ protected void onCreate(final Bundle savedInstanceState) {
             }
         });
 
-        btn_show_surveys.setOnClickListener(new OnClickListener(){
+        /*btn_show_surveys.setOnClickListener(new OnClickListener(){
 
             public void onClick(View v){
 
@@ -232,7 +232,7 @@ protected void onCreate(final Bundle savedInstanceState) {
                 startActivity(intent);
             }
 
-        });
+        });*/
 
 
 	}

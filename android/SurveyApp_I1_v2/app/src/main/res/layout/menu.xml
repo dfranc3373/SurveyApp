@@ -42,7 +42,7 @@
         android:layout_marginTop="50dp"
         android:textSize="25dp" />
 
-    <Button
+    <!--<Button
         android:id="@+id/btn_survey_list"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         android:layout_marginTop="50dp"
         android:text="Show Surveys"
         android:textColor="#585858"
-        android:textSize="25dp" />
+        android:textSize="25dp" />-->
 
 
 </LinearLayout>

@@ -21,5 +21,7 @@ public final class Constants {
     public static final String FB = "FB";
     public static final String Gender = "Gender";
     public static final String Surveys = "Surveys";
+    public static final String SurveyTaken = "SurveyTaken";
+
 
 }

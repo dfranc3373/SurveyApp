@@ -141,7 +141,24 @@ public class SurveyList extends ActionBarActivity {
             m.put(ATTR_NAME_SID, currentSurvey.getSurveyID());
             //m.put(ATTR_NAME_IMG, img);
 
-            data.add(m);
+            ArrayList<Integer> takenSurveys = new ArrayList<Integer>();
+
+            Gson gson = new Gson();
+
+            takenSurveys = gson.fromJson(prefs.getString(Constants.SurveyTaken,""), new TypeToken<ArrayList<Integer>>(){}.getType());
+
+            if(takenSurveys == null) {
+
+                takenSurveys = new ArrayList<Integer>();
+
+            }
+
+            if(!takenSurveys.contains(currentSurvey.getSurveyID())) {
+
+                data.add(m);
+
+            }
+
         }
 
         //source and destination for the adapter
@@ -223,6 +240,15 @@ public class SurveyList extends ActionBarActivity {
 
             case R.id.menu_logout:
                 // logout user and show main menu
+                SharedPreferences.Editor editor = prefs.edit();
+
+                editor.putBoolean(Constants.LoggedIn, false);
+                editor.putInt(Constants.UserID, 0);
+                editor.commit();
+
+                intent = new Intent(SurveyList.this, com.example.macbook.surveyapp_i1.Menu.class);
+                startActivity(intent);
+                finish();
 
                 break;
         }

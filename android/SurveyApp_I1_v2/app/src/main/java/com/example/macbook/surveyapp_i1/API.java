@@ -57,7 +57,7 @@ public class API {
         List<NameValuePair> values = new ArrayList<NameValuePair>();
 
         values.add(new BasicNameValuePair("email", Email));
-        values.add(new BasicNameValuePair("Password", Password));
+        values.add(new BasicNameValuePair("password", Password));
 
         sendRequest r = new sendRequest(url, values);
 
@@ -85,7 +85,7 @@ public class API {
 
             if(authentication.getSuccess() == true) {
 
-                User member = ((User) authentication.getModel());
+                User member = gson.fromJson(gson.toJson(authentication.getModel()), new TypeToken<User>(){}.getType());
 
                 SharedPreferences.Editor edit = preferences.edit();
 
@@ -219,7 +219,7 @@ public class API {
 
             if(authentication.getSuccess() == true) {
 
-                User member = ((User) authentication.getModel());
+                User member = gson.fromJson(gson.toJson(authentication.getModel()), new TypeToken<User>(){}.getType());
 
                 SharedPreferences.Editor edit = preferences.edit();
 
@@ -256,7 +256,7 @@ public class API {
         List<NameValuePair> values = new ArrayList<NameValuePair>();
 
         values.add(new BasicNameValuePair("question_answers", gson.toJson(answers)));
-        values.add(new BasicNameValuePair("user_id", preferences.getString(Constants.UserID, "")));
+        values.add(new BasicNameValuePair("user_id", String.valueOf(preferences.getInt(Constants.UserID, 0))));
 
         sendRequest r = new sendRequest(url, values);
 

@@ -73,7 +73,7 @@ public class TakeSurvey extends ActionBarActivity {
 
             Intent intent = getIntent();
 
-            int SurveyID = intent.getIntExtra("SurveyID", 0);
+            SurveyID = intent.getIntExtra("SurveyID", 0);
 
             List<Survey> surveys = (new Gson()).fromJson(prefs.getString(Constants.Surveys, ""), new TypeToken<List<Survey>>(){}.getType());
 
@@ -215,6 +215,7 @@ public class TakeSurvey extends ActionBarActivity {
         if(answersent) {
 
             Intent i = new Intent(TakeSurvey.this, RateSurvey.class);
+            i.putExtra("SurveyID", SurveyID);
             startActivity(i);
             finish();
 
