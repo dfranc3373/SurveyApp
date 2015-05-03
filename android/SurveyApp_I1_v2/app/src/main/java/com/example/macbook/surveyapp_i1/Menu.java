@@ -109,7 +109,7 @@ protected void onCreate(final Bundle savedInstanceState) {
         sph = new SharedPrefsHandler(this);
 
         btn_sign_up = (Button) findViewById(R.id.btn_sign_up);
-        btn_view_profile = (Button) findViewById(R.id.btn_view_profile);
+        btn_view_profile = (Button) findViewById(R.id.btn_login);
         btn_show_surveys = (Button) findViewById(R.id.btn_survey_list);
 
         LoginButton authButton = (LoginButton) findViewById(R.id.authButton);
@@ -218,7 +218,7 @@ protected void onCreate(final Bundle savedInstanceState) {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent("android.intent.action.VIEWPROFILE");
+                Intent intent = new Intent("android.intent.action.LOGIN");
                 //  intent.addCategory(Intent.CATEGORY_HOME);
                 startActivity(intent);
             }
