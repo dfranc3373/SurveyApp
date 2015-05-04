@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Artsiom on 2/18/15.
  */
-public class Survey {
+public class Survey{
 
     private int SurveyID;
     private String Name;
@@ -100,6 +100,18 @@ public class Survey {
     }
     public int getAgeRange() {
         return AgeRange;
+    }
+
+
+    public int compareTo(Survey sur) {
+
+        long date = sur.getDateCreated();
+
+        // ascending order
+        // return (int) (this.salary - compareSalary);
+
+        // descending order
+        return (int) (date - this.DateCreated);
     }
 
 }

@@ -22,6 +22,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,8 +118,6 @@ public class SurveyList extends ActionBarActivity {
 
         }
 
-
-
         Log.d("myLog", "Number of surveys: " +  surveys.size() );
 
         setSpinners();
@@ -202,6 +202,8 @@ public class SurveyList extends ActionBarActivity {
 
                 //sort survey list in random order
 
+
+
                 //show toast that random order is selected
                 Toast.makeText(context, R.string.toast_show_random, Toast.LENGTH_SHORT).show();
 
@@ -280,12 +282,34 @@ public class SurveyList extends ActionBarActivity {
 
 
         spDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            List tmpSurveys = surveys;
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case SP_DATE_NEWEST:
 
                         //show surveys newest first
+
+                        //sort tmpSurveys by date ascending
+                        Collections.sort(tmpSurveys, new Comparator() {
+                            @Override
+                            public int compare(Object lhs, Object rhs) {
+                                Survey sur1 = (Survey) lhs;
+                                Survey sur2 = (Survey) rhs;
+
+                                return sur1.compareTo(sur2);
+                            }
+                        });
+
+
+                        //create adapter
+
+                        //set to list view
+
+                        //notify data changed
+
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_newest_first, Toast.LENGTH_SHORT).show();
@@ -294,7 +318,25 @@ public class SurveyList extends ActionBarActivity {
                         break;
                     case SP_DATE_OLDEST:
 
-                        //show surveys newest first
+                        //show surveys oldest first
+
+                        //sort tmpSurveys by date descending
+                        Collections.sort(tmpSurveys, new Comparator() {
+                            @Override
+                            public int compare(Object lhs, Object rhs) {
+                                Survey sur1 = (Survey) lhs;
+                                Survey sur2 = (Survey) rhs;
+
+                                return sur2.compareTo(sur1);
+                            }
+                        });
+
+
+                        //create adapter
+
+                        //set to list view
+
+                        //notify data changed
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_oldest_first, Toast.LENGTH_SHORT).show();
@@ -310,12 +352,18 @@ public class SurveyList extends ActionBarActivity {
         });
 
         spCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            List tmpSurveys = surveys;
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 switch (position){
                     case SP_CATEGORY_ALL:
                         //show all surveys
+
+                        //create adapter
+                        //show original surveys list
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_category_all, Toast.LENGTH_SHORT).show();
@@ -324,6 +372,14 @@ public class SurveyList extends ActionBarActivity {
                     case SP_CATEGORY_ELECTRONICS:
                         //show category
 
+                        tmpSurveys = filterCategory(tmpSurveys, SP_CATEGORY_ELECTRONICS);
+
+                        //create adapter
+
+                        //set to list view
+
+                        //notify data changed
+
                         //show toast
                         Toast.makeText(context, R.string.toast_show_category_electronics, Toast.LENGTH_SHORT).show();
 
@@ -331,12 +387,28 @@ public class SurveyList extends ActionBarActivity {
                     case SP_CATEGORY_HOME:
                         //show category
 
+                        tmpSurveys = filterCategory(tmpSurveys, SP_CATEGORY_HOME);
+
+                        //create adapter
+
+                        //set to list view
+
+                        //notify data changed
+
                         //show toast
                         Toast.makeText(context, R.string.toast_show_category_home, Toast.LENGTH_SHORT).show();
 
                         break;
                     case SP_CATEGORY_GARDEN:
                         //show category
+
+                        tmpSurveys = filterCategory(tmpSurveys, SP_CATEGORY_GARDEN);
+
+                        //create adapter
+
+                        //set to list view
+
+                        //notify data changed
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_category_garden, Toast.LENGTH_SHORT).show();
@@ -349,6 +421,26 @@ public class SurveyList extends ActionBarActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
+
+            private List filterCategory(List list, int category){
+
+                for (Object obj : list){
+
+                    Survey sur = (Survey) obj;
+
+                    if(!(sur.getCategory() == surveyCategory[category])){
+
+                        list.remove(tmpSurveys.indexOf(sur));
+                    }
+                }
+
+                return list;
+            }
         });
+
+
+
+
+
     }
 }
