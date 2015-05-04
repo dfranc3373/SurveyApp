@@ -122,55 +122,8 @@ public class SurveyList extends ActionBarActivity {
 
         setSpinners();
 
-        //maps for the list
-        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(surveys.size());
-        Map<String, Object> m;
+        updateListView(surveys);
 
-        //add data to the maps
-        for (int i=0; i<surveys.size(); i++){
-
-            Survey currentSurvey = (Survey)surveys.get(i);
-
-            Log.d("myLog",currentSurvey.getTitle() );
-
-            m = new HashMap<String, Object>();
-            m.put(ATTR_NAME_TITLE, currentSurvey.getTitle());
-            m.put(ATTR_NAME_CATEGORY, currentSurvey.getCategory());
-            m.put(ATTR_NAME_DESCRIPTION, currentSurvey.getDescription());
-            m.put(ATTR_NAME_SID, currentSurvey.getSurveyID());
-            //m.put(ATTR_NAME_IMG, img);
-
-            ArrayList<Integer> takenSurveys = new ArrayList<Integer>();
-
-            Gson gson = new Gson();
-
-            takenSurveys = gson.fromJson(prefs.getString(Constants.SurveyTaken,""), new TypeToken<ArrayList<Integer>>(){}.getType());
-
-            if(takenSurveys == null) {
-
-                takenSurveys = new ArrayList<Integer>();
-
-            }
-
-            if(!takenSurveys.contains(currentSurvey.getSurveyID())) {
-
-                data.add(m);
-
-            }
-
-        }
-
-        //source and destination for the adapter
-        String[] from = {ATTR_NAME_TITLE, ATTR_NAME_CATEGORY,
-                ATTR_NAME_DESCRIPTION, ATTR_NAME_SID};
-        int[]to = {R.id.tvSurveyTitle, R.id.tvSurveyCategory,
-                R.id.tvSurveyDescription, R.id.tvSurveyID};
-
-        //create adapter and give it to the survey list
-        SimpleAdapter simpleAdapter =
-                new SimpleAdapter(this, data, R.layout.survey_item, from, to);
-        lvSurveyList = (ListView) findViewById(R.id.lvSurveyList);
-        lvSurveyList.setAdapter(simpleAdapter);
 
         //item in survey list selected
         lvSurveyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -201,7 +154,8 @@ public class SurveyList extends ActionBarActivity {
 
                 //sort survey list in random order
 
-
+                //tmp solution to show original surveys list
+                updateListView(surveys);
 
                 //show toast that random order is selected
                 Toast.makeText(context, R.string.toast_show_random, Toast.LENGTH_SHORT).show();
@@ -282,12 +236,14 @@ public class SurveyList extends ActionBarActivity {
 
         spDate.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            List tmpSurveys = surveys;
+            List <Survey> tmpSurveys = new ArrayList<Survey>(surveys);
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position){
                     case SP_DATE_NEWEST:
+
+                        tmpSurveys = new ArrayList<Survey>(surveys);
 
                         //show surveys newest first
 
@@ -310,6 +266,8 @@ public class SurveyList extends ActionBarActivity {
 
                         break;
                     case SP_DATE_OLDEST:
+
+                        tmpSurveys = new ArrayList<Survey>(surveys);
 
                         //show surveys oldest first
 
@@ -341,7 +299,7 @@ public class SurveyList extends ActionBarActivity {
 
         spCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
-            List tmpSurveys = surveys;
+            List <Survey> tmpSurveys = new ArrayList<Survey>(surveys);
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -358,6 +316,8 @@ public class SurveyList extends ActionBarActivity {
 
                     case SP_CATEGORY_ELECTRONICS:
 
+                        tmpSurveys = new ArrayList<Survey>(surveys);
+
                         //filter the category and reload data in list view
                         updateListView(filterCategory(tmpSurveys, SP_CATEGORY_ELECTRONICS));
 
@@ -367,6 +327,8 @@ public class SurveyList extends ActionBarActivity {
                         break;
                     case SP_CATEGORY_HOME:
 
+                        tmpSurveys = new ArrayList<Survey>(surveys);
+
                         //filter the category and reload data in list view
                         updateListView(filterCategory(tmpSurveys, SP_CATEGORY_HOME));
 
@@ -375,6 +337,8 @@ public class SurveyList extends ActionBarActivity {
 
                         break;
                     case SP_CATEGORY_GARDEN:
+
+                        tmpSurveys = new ArrayList<Survey>(surveys);
 
                         //filter the category and reload data in list view
                         updateListView(filterCategory(tmpSurveys, SP_CATEGORY_GARDEN));
@@ -386,7 +350,7 @@ public class SurveyList extends ActionBarActivity {
                 }
             }
 
-            
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -409,14 +373,55 @@ public class SurveyList extends ActionBarActivity {
         return list;
     }
 
-    private void updateListView(List list){
 
-        //create adapter
+    private void updateListView(List surveys){
 
-        //set to list view
+        //maps for the list
+        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(surveys.size());
+        Map<String, Object> m;
 
-        //notify data changed
+        //add data to the maps
+        for (int i=0; i<surveys.size(); i++){
 
+            Survey currentSurvey = (Survey)surveys.get(i);
 
+            //Log.d("myLog",currentSurvey.getTitle() );
+
+            m = new HashMap<String, Object>();
+            m.put(ATTR_NAME_TITLE, currentSurvey.getTitle());
+            m.put(ATTR_NAME_CATEGORY, currentSurvey.getCategory());
+            m.put(ATTR_NAME_DESCRIPTION, currentSurvey.getDescription());
+            m.put(ATTR_NAME_SID, currentSurvey.getSurveyID());
+            //m.put(ATTR_NAME_IMG, img);
+
+            ArrayList<Integer> takenSurveys = new ArrayList<Integer>();
+
+            Gson gson = new Gson();
+
+            takenSurveys = gson.fromJson(prefs.getString(Constants.SurveyTaken,""), new TypeToken<ArrayList<Integer>>(){}.getType());
+
+            if(takenSurveys == null) {
+
+                takenSurveys = new ArrayList<Integer>();
+
+            }
+
+            if(!takenSurveys.contains(currentSurvey.getSurveyID())) {
+
+                data.add(m);
+            }
+        }
+
+        //source and destination for the adapter
+        String[] from = {ATTR_NAME_TITLE, ATTR_NAME_CATEGORY,
+                ATTR_NAME_DESCRIPTION, ATTR_NAME_SID};
+        int[]to = {R.id.tvSurveyTitle, R.id.tvSurveyCategory,
+                R.id.tvSurveyDescription, R.id.tvSurveyID};
+
+        //create adapter and give it to the survey list
+        SimpleAdapter simpleAdapter =
+                new SimpleAdapter(this, data, R.layout.survey_item, from, to);
+        lvSurveyList = (ListView) findViewById(R.id.lvSurveyList);
+        lvSurveyList.setAdapter(simpleAdapter);
     }
 }
