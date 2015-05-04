@@ -123,8 +123,7 @@ public class SurveyList extends ActionBarActivity {
         setSpinners();
 
         //maps for the list
-        ArrayList<Map<String, Object>> data =
-                new ArrayList<Map<String, Object>>(surveys.size());
+        ArrayList<Map<String, Object>> data = new ArrayList<Map<String, Object>>(surveys.size());
         Map<String, Object> m;
 
         //add data to the maps
@@ -303,13 +302,7 @@ public class SurveyList extends ActionBarActivity {
                             }
                         });
 
-
-                        //create adapter
-
-                        //set to list view
-
-                        //notify data changed
-
+                        updateListView(tmpSurveys);
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_newest_first, Toast.LENGTH_SHORT).show();
@@ -331,12 +324,7 @@ public class SurveyList extends ActionBarActivity {
                             }
                         });
 
-
-                        //create adapter
-
-                        //set to list view
-
-                        //notify data changed
+                        updateListView(tmpSurveys);
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_oldest_first, Toast.LENGTH_SHORT).show();
@@ -360,55 +348,36 @@ public class SurveyList extends ActionBarActivity {
 
                 switch (position){
                     case SP_CATEGORY_ALL:
-                        //show all surveys
 
-                        //create adapter
-                        //show original surveys list
+                        //show original surveys
+                        updateListView(surveys);
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_category_all, Toast.LENGTH_SHORT).show();
                         break;
 
                     case SP_CATEGORY_ELECTRONICS:
-                        //show category
 
-                        tmpSurveys = filterCategory(tmpSurveys, SP_CATEGORY_ELECTRONICS);
-
-                        //create adapter
-
-                        //set to list view
-
-                        //notify data changed
+                        //filter the category and reload data in list view
+                        updateListView(filterCategory(tmpSurveys, SP_CATEGORY_ELECTRONICS));
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_category_electronics, Toast.LENGTH_SHORT).show();
 
                         break;
                     case SP_CATEGORY_HOME:
-                        //show category
 
-                        tmpSurveys = filterCategory(tmpSurveys, SP_CATEGORY_HOME);
-
-                        //create adapter
-
-                        //set to list view
-
-                        //notify data changed
+                        //filter the category and reload data in list view
+                        updateListView(filterCategory(tmpSurveys, SP_CATEGORY_HOME));
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_category_home, Toast.LENGTH_SHORT).show();
 
                         break;
                     case SP_CATEGORY_GARDEN:
-                        //show category
 
-                        tmpSurveys = filterCategory(tmpSurveys, SP_CATEGORY_GARDEN);
-
-                        //create adapter
-
-                        //set to list view
-
-                        //notify data changed
+                        //filter the category and reload data in list view
+                        updateListView(filterCategory(tmpSurveys, SP_CATEGORY_GARDEN));
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_category_garden, Toast.LENGTH_SHORT).show();
@@ -417,29 +386,36 @@ public class SurveyList extends ActionBarActivity {
                 }
             }
 
+            
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-
-            private List filterCategory(List list, int category){
-
-                for (Object obj : list){
-
-                    Survey sur = (Survey) obj;
-
-                    if(!(sur.getCategory() == surveyCategory[category])){
-
-                        list.remove(tmpSurveys.indexOf(sur));
-                    }
-                }
-
-                return list;
-            }
         });
+    }
 
+    private List filterCategory(List list, int category){
 
+        for (Object obj : list){
 
+            Survey sur = (Survey) obj;
+
+            if(!(sur.getCategory() == surveyCategory[category])){
+
+                list.remove(list.indexOf(sur));
+            }
+        }
+
+        return list;
+    }
+
+    private void updateListView(List list){
+
+        //create adapter
+
+        //set to list view
+
+        //notify data changed
 
 
     }
