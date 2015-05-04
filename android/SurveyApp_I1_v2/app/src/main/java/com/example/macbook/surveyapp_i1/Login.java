@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * Created by macbookuser on 5/3/15.
+ * Created by Sandesh on 5/3/15.
  */
 public class Login extends Activity {
 

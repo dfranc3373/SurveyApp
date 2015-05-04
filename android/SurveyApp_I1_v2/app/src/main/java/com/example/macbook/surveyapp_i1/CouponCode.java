@@ -20,7 +20,6 @@ public class CouponCode extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.coupon_code);
 
-
     }
 
 }
