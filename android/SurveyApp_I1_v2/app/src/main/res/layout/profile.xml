@@ -51,7 +51,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="7dp"
                         android:layout_marginTop="-2dp"
-                        android:text=" "
+                        android:text="Derrick"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#F6CECE" />
                     <TextView
@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="7dp"
                         android:layout_marginTop="-2dp"
-                        android:text="Phone"
+                        android:text="860-481-2034"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#F6CECE" />
                 </LinearLayout>
@@ -95,7 +95,7 @@
                 android:orientation="vertical" >
 
                 <TextView
-                    android:id="@+id/ocneglet"
+                    android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#01A9DB"
@@ -138,18 +138,6 @@
 
 
             </LinearLayout>
-
-
-            <TextView
-                android:id="@+id/deleteV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/ll4"
-                android:layout_marginRight="10dp"
-                android:text="Delete my Profile"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#FF0000" />
 
         </RelativeLayout>
     </ScrollView>

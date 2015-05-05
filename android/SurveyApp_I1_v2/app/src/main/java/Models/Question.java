@@ -7,10 +7,62 @@ import java.util.List;
  */
 public class Question {
 
-    int QuestionID;
-    int SurveyID;
-    String Title;
-    String Description;
-    List<QuestionAnswer> Answers;
+    private int QuestionID;
+    private int SurveyID;
 
+    private String Survey;
+    private String Description;
+    private List<QuestionAnswer> Answers;
+
+    //setters
+
+    public void setSurvey(String survey) {
+        Survey = survey;
+    }
+
+    public void setQuestionID(int questionID) {
+        this.QuestionID = questionID;
+    }
+
+    public void setSurveyID(int surveyID) {
+        this.SurveyID = surveyID;
+    }
+
+    public void setTitle(String title) {
+        this.Survey = title;
+    }
+
+    public void setDescription(String description) {
+        this.Description = description;
+    }
+
+    public void setAnswers(List<QuestionAnswer> answers) {
+        this.Answers = answers;
+    }
+
+    //getters
+
+    public int getQuestionID() {
+        return this.QuestionID;
+    }
+
+    public int getSurveyID() {
+        return this.SurveyID;
+    }
+
+    public String getTitle() {
+        return this.Survey;
+    }
+
+    public String getDescription() {
+        return this.Description;
+    }
+
+    public List<QuestionAnswer> getAnswers() {
+        return this.Answers;
+    }
+
+    public String getSurvey() {
+        return Survey;
+    }
 }

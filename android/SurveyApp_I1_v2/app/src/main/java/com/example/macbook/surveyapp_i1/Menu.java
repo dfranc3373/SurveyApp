@@ -3,6 +3,7 @@ package com.example.macbook.surveyapp_i1;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,39 +42,79 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import Models.Survey;
+
 public class Menu extends Activity implements OnClickListener{
 
-	Button btn_sign_up;
-	Button btn_view_profile;
-    Button btn_show_surveys;
-    private String TAG = "LoginWithFB";
-//<<<<<<< Updated upstream
-    String get_id;
-
-    ProgressDialog dialog;
-
-    SharedPrefsHandler sph;
-	
-//	protected void onCreate(final Bundle savedInstanceState) {
-//=======
     String get_age="unknown";
     String get_name="unknown";
     String get_gender="unknown";
     String get_email="unknown";
 
-	protected void onCreate(Bundle savedInstanceState) {
-//>>>>>>> Stashed changes
+	Button btn_sign_up;
+	Button btn_view_profile;
+    Button btn_show_surveys;
+    private String TAG = "LoginWithFB";
+
+    String get_id;
+
+    ProgressDialog dialog;
+
+    SharedPrefsHandler sph;
+
+    private SharedPreferences preferences;
+
+    Gson gson = new Gson();
+	
+protected void onCreate(final Bundle savedInstanceState) {
+    
 		// TODO Auto-generated method stub	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.menu);
 
+        //for testing purposes simulate logged in
+        preferences = Menu.this.getSharedPreferences(Constants.PREF_NAME, 0);
+        boolean loggedIn = preferences.getBoolean(Constants.LoggedIn, false);
+        //loggedIn = true;
+
+        if(loggedIn) {
+
+            Thread api = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    API api = new API(Menu.this);
+                    List<Survey> surveys = api.getSurveys();
+                    if(surveys.size() == 1) {
+
+                        String info = "";
+
+                    }
+                }
+            });
+
+            api.start();
+
+            //they are logged in
+
+            //Intent i = new Intent(Menu.this, RateSurvey.class);
+            //startActivity(i);
+            //finish();
+
+            Intent i = new Intent(Menu.this, SurveyList.class);
+            startActivity(i);
+            finish();
+
+        }
+
         sph = new SharedPrefsHandler(this);
 
         btn_sign_up = (Button) findViewById(R.id.btn_sign_up);
-        btn_view_profile = (Button) findViewById(R.id.btn_view_profile);
-        btn_show_surveys = (Button) findViewById(R.id.btn_survey_list);
+        btn_view_profile = (Button) findViewById(R.id.btn_login);
+        //btn_show_surveys = (Button) findViewById(R.id.btn_survey_list);
 
         LoginButton authButton = (LoginButton) findViewById(R.id.authButton);
+
+
 
         authButton.setOnErrorListener(new LoginButton.OnErrorListener() {
 
@@ -158,6 +199,8 @@ public class Menu extends Activity implements OnClickListener{
                                 }
                             });
                 }
+
+
             }
         });
 
@@ -175,13 +218,13 @@ public class Menu extends Activity implements OnClickListener{
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent("android.intent.action.VIEWPROFILE");
+                Intent intent = new Intent("android.intent.action.LOGIN");
                 //  intent.addCategory(Intent.CATEGORY_HOME);
                 startActivity(intent);
             }
         });
 
-        btn_show_surveys.setOnClickListener(new OnClickListener(){
+        /*btn_show_surveys.setOnClickListener(new OnClickListener(){
 
             public void onClick(View v){
 
@@ -189,7 +232,7 @@ public class Menu extends Activity implements OnClickListener{
                 startActivity(intent);
             }
 
-        });
+        });*/
 
 
 	}
@@ -224,7 +267,7 @@ public class Menu extends Activity implements OnClickListener{
 
                 Models.Response r = gson.fromJson(json, new TypeToken<Models.Response>() {}.getType());
 
-                if(r.Success) {
+                if(r.getSuccess()) {
 
                     Log.i("Log User in", "User data has been verified");
 

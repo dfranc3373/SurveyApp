@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#CEF6F5">
+    android:background="#CEF6F5"
+    android:id="@+id/signup1">
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Enter your First name:"
+        android:text=" Enter your name:"
         android:id="@+id/tv_first_name"
         android:textSize="25dp" />
 
@@ -17,11 +18,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="25"
-        android:id="@+id/first_name" />
+        android:id="@+id/name" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=" Enter your Last name:"
+        android:text=" Enter your email address:"
         android:layout_marginTop="20dp"
         android:id="@+id/tv_last_name"
         android:textSize="25dp" />
@@ -29,7 +30,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="25"
-        android:id="@+id/last_name" />
+        android:id="@+id/email" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Enter your password:"
+        android:layout_marginTop="20dp"
+        android:id="@+id/tv_password"
+        android:textSize="25dp" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/password"
+        android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Select your gender"
+        android:layout_marginTop="20dp"
+        android:id="@+id/tv_gender"
+        android:textSize="25dp" />
+    <Spinner
+        android:id="@+id/select_gender"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"
+        />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,29 +67,12 @@
         android:id="@+id/tv_age"
         android:textSize="25dp" />
 
-
-
-    <Spinner
-        android:id="@+id/spinner_age"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=" Select your age range:"
-        android:textSize="25dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" Enter your phone number:"
-        android:layout_marginTop="20dp"
-        android:id="@+id/tv_phone"
-        android:textSize="25dp" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:ems="25"
-        android:id="@+id/phone" />
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/age" />
 
     <TextView
         android:layout_width="wrap_content"

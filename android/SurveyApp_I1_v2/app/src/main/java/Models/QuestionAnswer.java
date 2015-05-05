@@ -5,7 +5,36 @@ package Models;
  */
 public class QuestionAnswer {
 
-    int QuestionAnswerID;
-    String Answer;
+    private int QuestionAnswerID;
+    private int Question;
+    private String Answer;
+
+    //setters
+
+    public void setQuestionAnswerID(int questionAnswerID) {
+        this.QuestionAnswerID = questionAnswerID;
+    }
+
+    public void setAnswer(String answer) {
+        this.Answer = answer;
+    }
+
+    public void setQuestion(int q) {
+        this.Question = q;
+    }
+
+    //getters
+
+    public int getQuestionAnswerID() {
+        return this.QuestionAnswerID;
+    }
+
+    public String getAnswer() {
+        return this.Answer;
+    }
+
+    public int getQuestion(int q) {
+        return this.Question;
+    }
 
 }

@@ -50,7 +50,7 @@ public class DataHandler {
 			+ KEY_NAME + " text not null, "
                     + KEY_LAST + " text not null, "
                     + KEY_AGE + " integer not NULL, "
-			+ KEY_PHONE + " integer not NULL, "
+			+ KEY_PHONE + " text not null, "
                     + KEY_TOKEN + " integer not null);");
 		}
 

@@ -51,6 +51,15 @@
             android:text="Survey Description">
         </TextView>
 
+        <TextView
+            android:id="@+id/tvSurveyID"
+            android:text=" "
+            android:layout_height="0px"
+            android:layout_width="0px"
+            android:visibility="invisible">
+            </TextView>
+
+
     </LinearLayout>
 
 </LinearLayout>

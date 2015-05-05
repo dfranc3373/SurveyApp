@@ -14,8 +14,10 @@ public class CouponTest{
 
     @Test
     public void notNull(){
-        Coupon coupon = new Coupon();
-        assertNotNull(coupon);
+
+        QuestionAnswer questAns = new QuestionAnswer();
+        assertNotNull(questAns);
     }
+
 
 }
