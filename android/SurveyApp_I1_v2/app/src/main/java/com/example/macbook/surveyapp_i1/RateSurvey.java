@@ -43,35 +43,11 @@ public class RateSurvey extends ActionBarActivity {
 
         Gson gson = new Gson();
 
-
-
         prefs = context.getSharedPreferences(Constants.PREF_NAME, 0);
 
         //read takenS from prefs
 
-
         SharedPreferences.Editor editor = prefs.edit();
-
-
-        ArrayList<Integer> takenSurveys = new ArrayList<Integer>();
-
-        takenSurveys = gson.fromJson(prefs.getString(Constants.SurveyTaken,""), new TypeToken<ArrayList<Integer>>(){}.getType());
-
-        if(takenSurveys == null) {
-
-            takenSurveys = new ArrayList<Integer>();
-
-        }
-
-        if(!takenSurveys.contains(surveyID)){
-
-            takenSurveys.add(surveyID);
-        }
-
-        editor.putString(Constants.SurveyTaken, gson.toJson(takenSurveys));
-        editor.putInt(Constants.UserID, 0);
-        editor.commit();
-
 
         try {
 
@@ -94,6 +70,24 @@ public class RateSurvey extends ActionBarActivity {
             finish();
 
         }
+
+        ArrayList<Integer> takenSurveys = new ArrayList<Integer>();
+
+        takenSurveys = gson.fromJson(prefs.getString(Constants.SurveyTaken,""), new TypeToken<ArrayList<Integer>>(){}.getType());
+
+        if(takenSurveys == null) {
+
+            takenSurveys = new ArrayList<Integer>();
+
+        }
+
+        if(!takenSurveys.contains(surveyID)){
+
+            takenSurveys.add(surveyID);
+        }
+
+        editor.putString(Constants.SurveyTaken, gson.toJson(takenSurveys));
+        editor.commit();
 
         stars[0] = (ImageButton) findViewById(R.id.btnStarOne);
         stars[1] = (ImageButton) findViewById(R.id.btnStarTwo);
@@ -190,8 +184,6 @@ public class RateSurvey extends ActionBarActivity {
             dialog.setMessage("Please wait");
 
             dialog.show();
-
-
 
             Thread sendFeedback = new Thread(new Runnable() {
                 @Override

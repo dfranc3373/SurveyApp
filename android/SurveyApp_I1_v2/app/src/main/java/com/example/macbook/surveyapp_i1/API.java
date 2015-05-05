@@ -133,7 +133,7 @@ public class API {
 
         List<NameValuePair> values = new ArrayList<NameValuePair>();
 
-        values.add(new BasicNameValuePair("last_survey", String.valueOf(LastSurveyIDStored)));
+        values.add(new BasicNameValuePair("last_id", String.valueOf(LastSurveyIDStored)));
 
         sendRequest r = new sendRequest(url, values);
 

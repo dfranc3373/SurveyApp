@@ -1,5 +1,6 @@
 package com.example.macbook.surveyapp_i1;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,11 +26,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import Models.Survey;
-
 
 public class SurveyList extends ActionBarActivity {
 
@@ -95,14 +97,9 @@ public class SurveyList extends ActionBarActivity {
 
         prefs = context.getSharedPreferences(Constants.PREF_NAME, 0);
 
-
         API entry = new API(SurveyList.this);
 
-        //cannot get any surveys with api getSurveys - log printing 0 surveys
-
-
         if(prefs.getString(Constants.Surveys, "").equals("")) {//no surveys exist
-
 
             surveys = entry.getSurveys(0);
 
@@ -116,6 +113,26 @@ public class SurveyList extends ActionBarActivity {
 
             surveys = (new Gson()).fromJson(prefs.getString(Constants.Surveys, ""), new TypeToken<List<Survey>>(){}.getType());
 
+            Survey lastSurvey = (Survey) surveys.get(surveys.size() - 1);
+
+            List<Survey> newSurveys = entry.getSurveys(lastSurvey.getSurveyID());
+
+            if(newSurveys.size() != 0) {
+
+                for(Survey info : newSurveys) {
+
+                    surveys.add(info);
+
+                }
+
+            }
+
+            SharedPreferences.Editor info = prefs.edit();
+
+            info.putString(Constants.Surveys, (new Gson()).toJson(surveys));
+
+            info.commit();
+
         }
 
         Log.d("myLog", "Number of surveys: " +  surveys.size() );
@@ -123,7 +140,6 @@ public class SurveyList extends ActionBarActivity {
         setSpinners();
 
         updateListView(surveys);
-
 
         //item in survey list selected
         lvSurveyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -152,10 +168,35 @@ public class SurveyList extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+                List<Survey> random = new ArrayList<Survey>();
+
+                List<Survey> current = new ArrayList<Survey>(surveys);
+
+                for(int i = 0; i < surveys.size(); i ++) {
+
+                    Random r = new Random();
+
+                    int i1 = 0;
+
+                    try {
+
+                        i1 = r.nextInt((current.size() - 1) - 0) + 0;
+
+                    } catch(Exception e) {
+
+                        i1 = current.size() - 1;
+
+                    }
+
+                    random.add(current.get(i1));
+                    current.remove(i1);
+
+                }
+
                 //sort survey list in random order
 
                 //tmp solution to show original surveys list
-                updateListView(surveys);
+                updateListView(random);
 
                 //show toast that random order is selected
                 Toast.makeText(context, R.string.toast_show_random, Toast.LENGTH_SHORT).show();
@@ -180,6 +221,60 @@ public class SurveyList extends ActionBarActivity {
         int id = item.getItemId();
 
         switch (id){
+
+            case R.id.menu_refresh:
+
+                final ProgressDialog loading = new ProgressDialog(SurveyList.this);
+                loading.setMessage("Loading");
+                loading.show();
+
+                setSpinners();
+
+                (new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        API api = new API(SurveyList.this);
+
+                        surveys = (new Gson()).fromJson(prefs.getString(Constants.Surveys, ""), new TypeToken<List<Survey>>(){}.getType());
+
+                        Survey lastSurvey = (Survey) surveys.get(surveys.size() - 1);
+
+                        List<Survey> newSurveys = api.getSurveys(lastSurvey.getSurveyID());
+
+                        if(newSurveys.size() != 0) {
+
+                            for(Survey info : newSurveys) {
+
+                                surveys.add(info);
+
+                            }
+
+                        }
+
+                        SharedPreferences.Editor info = prefs.edit();
+
+                        info.putString(Constants.Surveys, (new Gson()).toJson(surveys));
+
+                        info.commit();
+
+                        Log.d("myLog", "Number of surveys: " +  surveys.size() );
+
+                        SurveyList.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                updateListView(surveys);
+
+                                loading.hide();
+
+                            }
+                        });
+
+                    }
+                })).start();
+
+                break;
 
             case R.id.menu_coupons:
                 //show coupons list activity
@@ -210,7 +305,7 @@ public class SurveyList extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void setSpinners(){
+    void setSpinners() {
 
         //create adapters
         ArrayAdapter<String> adapterDate =
@@ -319,7 +414,7 @@ public class SurveyList extends ActionBarActivity {
                         tmpSurveys = new ArrayList<Survey>(surveys);
 
                         //filter the category and reload data in list view
-                        updateListView(filterCategory(tmpSurveys, SP_CATEGORY_ELECTRONICS));
+                        updateListView(filterCategory(SP_CATEGORY_ELECTRONICS));
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_category_electronics, Toast.LENGTH_SHORT).show();
@@ -330,7 +425,7 @@ public class SurveyList extends ActionBarActivity {
                         tmpSurveys = new ArrayList<Survey>(surveys);
 
                         //filter the category and reload data in list view
-                        updateListView(filterCategory(tmpSurveys, SP_CATEGORY_HOME));
+                        updateListView(filterCategory(SP_CATEGORY_HOME));
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_category_home, Toast.LENGTH_SHORT).show();
@@ -341,7 +436,7 @@ public class SurveyList extends ActionBarActivity {
                         tmpSurveys = new ArrayList<Survey>(surveys);
 
                         //filter the category and reload data in list view
-                        updateListView(filterCategory(tmpSurveys, SP_CATEGORY_GARDEN));
+                        updateListView(filterCategory(SP_CATEGORY_GARDEN));
 
                         //show toast
                         Toast.makeText(context, R.string.toast_show_category_garden, Toast.LENGTH_SHORT).show();
@@ -358,16 +453,20 @@ public class SurveyList extends ActionBarActivity {
         });
     }
 
-    private List filterCategory(List list, int category){
+    private List filterCategory(int category){
 
-        for (Object obj : list){
+        List<Survey> t = new ArrayList<Survey>(surveys);
 
-            Survey sur = (Survey) obj;
+        List<Survey> list = new ArrayList<Survey>();
 
-            if(!(sur.getCategory() == surveyCategory[category])){
+        for (Survey sur : t) {
 
-                list.remove(list.indexOf(sur));
+            if ((sur.getCategory() == surveyCategory[category])) {
+
+                list.add(sur);
+
             }
+
         }
 
         return list;
