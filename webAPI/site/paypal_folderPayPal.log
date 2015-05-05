@@ -1,0 +1,20 @@
+PayPal\Core\PPHttpConnection: Connecting to https://api.sandbox.paypal.com/v1/oauth2/token
+PayPal\Core\PPHttpConnection: Payload grant_type=client_credentials
+PayPal\Core\PPHttpConnection: Adding header User-Agent: PayPalSDK/rest-sdk-php 0.6.0 (lang=PHP;v=5.5.9-1ubuntu4.9;bit=64;os=Linux_3.13.0-48-generic;machine=x86_64;openssl=1.0.1f;curl=7.35.0)
+PayPal\Core\PPHttpConnection: Adding header Authorization: Basic QVY0QVNlbFdFYk9xRUlYYi1GMFhjVGExQzAxV0tOMmYtMU9rWEJYaHpLLVkzRGVwc25JNk10cXUxNmJ2Y3JpN3FoT1hRTzllWVl1YUtLNnQ6RUlleE1WWWcwR0ljc215bVVjOXFmMVJpNXRGbUUxSmpnNkhoMkJoaDB1NVRfSDBXOXg1WWhNX1B0bGZIRmFRMURjaUh2b096NnAwc0JfQU4=
+PayPal\Core\PPHttpConnection: Adding header Accept: */*
+PayPal\Core\PPHttpConnection: Connecting to https://api.sandbox.paypal.com/v1/oauth2/token
+PayPal\Core\PPHttpConnection: Payload grant_type=client_credentials
+PayPal\Core\PPHttpConnection: Adding header User-Agent: PayPalSDK/rest-sdk-php 0.6.0 (lang=PHP;v=5.5.9-1ubuntu4.9;bit=64;os=Linux_3.13.0-48-generic;machine=x86_64;openssl=1.0.1f;curl=7.35.0)
+PayPal\Core\PPHttpConnection: Adding header Authorization: Basic QVY0QVNlbFdFYk9xRUlYYi1GMFhjVGExQzAxV0tOMmYtMU9rWEJYaHpLLVkzRGVwc25JNk10cXUxNmJ2Y3JpN3FoT1hRTzllWVl1YUtLNnQ6RUlleE1WWWcwR0ljc215bVVjOXFmMVJpNXRGbUUxSmpnNkhoMkJoaDB1NVRfSDBXOXg1WWhNX1B0bGZIRmFRMURjaUh2b096NnAwc0JfQU4=
+PayPal\Core\PPHttpConnection: Adding header Accept: */*
+PayPal\Core\PPHttpConnection: Connecting to https://api.sandbox.paypal.com/v1/oauth2/token
+PayPal\Core\PPHttpConnection: Payload grant_type=client_credentials
+PayPal\Core\PPHttpConnection: Adding header User-Agent: PayPalSDK/rest-sdk-php 0.6.0 (lang=PHP;v=5.5.9-1ubuntu4.9;bit=64;os=Linux_3.13.0-48-generic;machine=x86_64;openssl=1.0.1f;curl=7.35.0)
+PayPal\Core\PPHttpConnection: Adding header Authorization: Basic QVY0QVNlbFdFYk9xRUlYYi1GMFhjVGExQzAxV0tOMmYtMU9rWEJYaHpLLVkzRGVwc25JNk10cXUxNmJ2Y3JpN3FoT1hRTzllWVl1YUtLNnQ6RUlleE1WWWcwR0ljc215bVVjOXFmMVJpNXRGbUUxSmpnNkhoMkJoaDB1NVRfSDBXOXg1WWhNX1B0bGZIRmFRMURjaUh2b096NnAwc0JfQU4=
+PayPal\Core\PPHttpConnection: Adding header Accept: */*
+PayPal\Core\PPHttpConnection: Connecting to https://api.sandbox.paypal.com/v1/oauth2/token
+PayPal\Core\PPHttpConnection: Payload grant_type=client_credentials
+PayPal\Core\PPHttpConnection: Adding header User-Agent: PayPalSDK/rest-sdk-php 0.6.0 (lang=PHP;v=5.5.9-1ubuntu4.9;bit=64;os=Linux_3.13.0-48-generic;machine=x86_64;openssl=1.0.1f;curl=7.35.0)
+PayPal\Core\PPHttpConnection: Adding header Authorization: Basic QVY0QVNlbFdFYk9xRUlYYi1GMFhjVGExQzAxV0tOMmYtMU9rWEJYaHpLLVkzRGVwc25JNk10cXUxNmJ2Y3JpN3FoT1hRTzllWVl1YUtLNnQ6RUlleE1WWWcwR0ljc215bVVjOXFmMVJpNXRGbUUxSmpnNkhoMkJoaDB1NVRfSDBXOXg1WWhNX1B0bGZIRmFRMURjaUh2b096NnAwc0JfQU4=
+PayPal\Core\PPHttpConnection: Adding header Accept: */*

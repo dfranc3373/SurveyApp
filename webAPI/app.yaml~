@@ -1,0 +1,67 @@
+application: survey-app-texastech
+version: 3
+runtime: php
+api_version: 1
+
+handlers:
+
+- url: /get_coupons
+  script: www/get_coupons.php
+  secure: optional
+
+- url: /get_surveys
+  script: www/get_surveys.php
+  secure: optional
+
+- url: /submit_useranswers
+  script: www/submit_useranswers.php
+  secure: optional
+
+- url: /get_usercoupons
+  script: www/get_usercoupons.php
+  secure: optional
+
+- url: /add_coupon2
+  script: site/home/add_coupon2.php
+  secure: optional
+
+- url: /(.+\.php)$
+  script: \1
+
+- url: /login
+  script: www/login.php
+  secure: optional
+
+- url: /SurveyFeedback
+  script: www/SurveyFeedback.php
+  secure: optional
+
+- url: /GetSurveyCode
+  script: www/GetSurveyCode.php
+  secure: optional
+
+- url: /register_user
+  script: www/register_user.php
+  secure: optional
+
+- url: /
+  script: site/index.php
+  secure: optional
+
+- url: /(.+)
+  script: \1
+
+- url: /site/(.+)
+  script: site/\1
+
+- url: /www/(.+)
+  script: www/\1
+
+- url: /home/(.+)
+  script: home/\1
+
+# Serve images as static resources.
+- url: /(.+\.(gif|png|jpg))$
+  static_files: \1
+  upload: .+\.(gif|png|jpg)$
+  application_readable: true
